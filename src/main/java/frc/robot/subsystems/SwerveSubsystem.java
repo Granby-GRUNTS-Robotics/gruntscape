@@ -16,6 +16,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.VecBuilder;
@@ -105,6 +106,8 @@ public class SwerveSubsystem extends SubsystemBase {
   private LimeLight limelight3;
   private LimeLight limelight3g;
 
+  public RobotConfig config;
+
  // stateStdDevs Standard deviations of the pose estimate (x position in meters, y position in meters, and heading in radians). 
   // Increase these numbers to trust your state estimate less.  I think this is where the robot thinks it is right now
   private static final edu.wpi.first.math.Vector<N3> stateStdDevs = VecBuilder.fill(0.05, 0.05,
@@ -163,10 +166,12 @@ public class SwerveSubsystem extends SubsystemBase {
     new Translation2d(-Constants.kWheelBase / 2, -Constants.kTrackWidth / 2)    // Back Right wheel position
   );
 
+  
 this.limelight3 = limelight3;
 this.limelight3g = limelight3g;
 
 NetworkTableInstance.getDefault().getTable("limelight-threeg").getEntry("pipeline").setInteger(0);
+
 
 
     ShuffleboardTab tab = Shuffleboard.getTab("Vision2");
@@ -182,8 +187,8 @@ NetworkTableInstance.getDefault().getTable("limelight-threeg").getEntry("pipelin
 
     tab.addString("Pose Estimator", this::getFomattedPose).withPosition(0, 0).withSize(2, 0);
     tab.add("Field", field2d).withPosition(2, 0).withSize(6, 4);
-
-      RobotConfig config;
+  
+    //RobotConfig config;
     try{
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
@@ -199,7 +204,7 @@ NetworkTableInstance.getDefault().getTable("limelight-threeg").getEntry("pipelin
     this::resetPose,
     this::getSpeeds, 
     this::driveRobotRelative, 
-
+    
     new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
           new PIDConstants(5, 0, 0), // Translation constants   5
          new PIDConstants(3, 0, 0) // Rotation constants
@@ -236,6 +241,7 @@ NetworkTableInstance.getDefault().getTable("limelight-threeg").getEntry("pipelin
 
   }
   }
+
 
   public double getHeading()
   {
