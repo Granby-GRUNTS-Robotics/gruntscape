@@ -8,6 +8,11 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.SwerveSubsystem;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -24,6 +29,7 @@ public class RobotContainer {
   public static final LimeLight limeLight3g  = new LimeLight(Constants.Limelight.limelightName3g);
   private final static CommandXboxController xboxController = new CommandXboxController(0);
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
+  private final SendableChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -34,8 +40,14 @@ public class RobotContainer {
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem, xboxController, Constants.isFieldCentric));
     // Configure the trigger bindings
     configureBindings();
-  }
 
+      
+      // This Should populate with all Autos (*.auto files) in deploy/pathplanner/autos directory. No need to populate here.
+      autoChooser = AutoBuilder.buildAutoChooser();
+      // Default auto will be `Commands.none()`
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+  }
+  
   public static final class Buttons
   {
     public static double getWithDeadZone(double value, double threshold)
@@ -73,9 +85,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 
-  // recomment this in eventually (1/11/25)
-  /*public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    
-  }*/
+    return autoChooser.getSelected();
+  }
 }

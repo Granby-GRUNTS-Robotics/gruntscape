@@ -55,8 +55,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    ////////// REMOVED JUST TO DRIVE (1/11/25), ADD BACK IN!
-    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

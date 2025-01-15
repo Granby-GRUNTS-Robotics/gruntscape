@@ -111,7 +111,6 @@ public final class Constants {
 
     public static final double maxModuleSpeed = 8;// 4.5; // orig 4.5 M/S Max speed for auto
   
-    // commented out on 1/11/25 to get swerve drive working 
   public static final PPHolonomicDriveController pathFollowerConfig = new PPHolonomicDriveController(
       new PIDConstants(5, 0, 0), // Translation constants   5
       new PIDConstants(3, 0, 0) // Rotation constants 
