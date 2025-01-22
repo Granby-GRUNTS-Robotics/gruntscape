@@ -19,7 +19,8 @@ public class LimeLight extends SubsystemBase {
   NetworkTableEntry pipelineEntry;
   boolean on = false;
 
-  public LimeLight(String name) {
+  public LimeLight(String name) 
+  {
     table = NetworkTableInstance.getDefault().getTable(name); // Set up Network table for Limelight info
     pipelineEntry = table.getEntry("pipeline");  
     pipelineEntry.setNumber(0);  // Set to April tag pipeline.  Should be the only one since no reflective tape this year

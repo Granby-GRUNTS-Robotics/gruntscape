@@ -285,8 +285,6 @@ public void resetAllEncoders()
 
   public void zeroGyro() {
     gyro.setYaw(0);
-    // gyroOffset = (DriverStation.getAlliance() == Alliance.Blue ? 0 : 180) % 360;
-    //gyro.setYaw(90);
   }
 
   @Override
@@ -431,10 +429,6 @@ public Pose2d getCurrentPose() {
   return poseEstimator.getEstimatedPosition();
 }
 
-//public void resetPose() {
-//  poseEstimator.resetPosition(getRotation2d(),
-//  getModulePosition(), getCurrentPose());
-//}
 
 public void resetPose(Pose2d pose) {
     poseEstimator.resetPosition(
