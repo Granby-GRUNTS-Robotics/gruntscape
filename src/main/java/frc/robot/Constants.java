@@ -34,6 +34,10 @@ public final class Constants {
     public static final int RIGHT_BACK_SPEED_MOTOR_ID = 40;
     public static final int RIGHT_BACK_DIRECTIION_MOTOR_ID = 41;
 
+    //Algea Control
+    public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 13;
+    public static final int LEFT_ALGAE_CONTROL_MOTOR_ID = 14;
+    
     //Absolute Encoders
     public static final int LEFT_FRONT_CANCODER_ID = 12;   
     public static final int RIGHT_FRONT_CANCODER_ID = 22;

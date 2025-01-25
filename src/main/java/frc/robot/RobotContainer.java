@@ -6,11 +6,18 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.subsystems.AlgaeArm;
+import frc.robot.subsystems.AlgaeControl;
+import frc.robot.subsystems.ClimberClamp;
+import frc.robot.subsystems.ClimberWinch;
+import frc.robot.subsystems.CoralControl;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.SwerveSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,6 +41,12 @@ public class RobotContainer {
   private static final GenericHID hid = xboxController.getHID();
 
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
+  public static final AlgaeArm algaeArm = new AlgaeArm();
+  public static final AlgaeControl algaeControl = new AlgaeControl();
+  public static final ClimberClamp climberClamp = new ClimberClamp();
+  public static final ClimberWinch climberWinch = new ClimberWinch();
+  public static final CoralControl coralControl = new CoralControl();
+  public static final Elevator elevator = new Elevator();
   
   private final SendableChooser<Command> autoChooser;
 
@@ -47,7 +60,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-      
+     // CameraServer.ADDLIMELIGHTSTREAMTOSHUFFLEBOARD(something, something);
+
       // This Should populate with all Autos (*.auto files) in deploy/pathplanner/autos directory. No need to populate here.
       autoChooser = AutoBuilder.buildAutoChooser();
       // Default auto will be `Commands.none()`
