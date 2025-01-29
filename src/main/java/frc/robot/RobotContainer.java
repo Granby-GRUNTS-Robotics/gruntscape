@@ -19,11 +19,13 @@ import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -37,8 +39,14 @@ public class RobotContainer {
   public static final LimeLight limeLight3  = new LimeLight(Constants.Limelight.limelightName3);
   public static final LimeLight limeLight3g  = new LimeLight(Constants.Limelight.limelightName3g);
   
+  // Xbox controller
   private final static CommandXboxController xboxController = new CommandXboxController(0);
   private static final GenericHID hid = xboxController.getHID();
+
+  // Joystick buttons
+  public static final Joystick BUTTON_JOYSTICK = new Joystick(1);
+  public static JoystickButton IntakeAlgaeButton;
+  public static JoystickButton OuttakeAlgaeButton;
 
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
   public static final AlgaeArm algaeArm = new AlgaeArm();
@@ -57,6 +65,10 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem, xboxController, Constants.isFieldCentric));
+    
+    // Define Joystick buttons
+    IntakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,2);
+    OuttakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,8);
     // Configure the trigger bindings
     configureBindings();
 
@@ -100,6 +112,11 @@ public class RobotContainer {
     xboxController.start().whileTrue(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 1)));
     xboxController.start().whileFalse(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 0)));
     xboxController.leftStick().toggleOnTrue(new InstantCommand(() -> swerveSubsystem.slowModeToggle()));
+
+
+    //Button Joystick Commands
+    IntakeAlgaeButton.toggleOnTrue(new InstantCommand(() -> algaeControl.setSpeeds(0.1)));
+    OuttakeAlgaeButton.whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(0.1)));
   }
 
   /**
