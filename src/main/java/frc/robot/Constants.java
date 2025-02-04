@@ -34,10 +34,19 @@ public final class Constants {
     public static final int RIGHT_BACK_SPEED_MOTOR_ID = 40;
     public static final int RIGHT_BACK_DIRECTIION_MOTOR_ID = 41;
 
-    //Algea Control
-    public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 13;
-    public static final int LEFT_ALGAE_CONTROL_MOTOR_ID = 14;
-    
+    //Algae Control
+    public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 3;
+    public static final int LEFT_ALGAE_CONTROL_MOTOR_ID = 4;
+
+    // Elevator Motors
+    public static final int ELEVATOR_DIRECTION_MOTOR_ID = 5;
+
+    // Elevator Levels
+    public static final int LEVEL_ONE_HEIGHT = 10; // rotations's
+    public static final int LEVEL_TWO_HEIGHT = 20; // rotations's
+    public static final int LEVEL_THREE_HEIGHT = 30; // rotations's
+
+
     //Absolute Encoders
     public static final int LEFT_FRONT_CANCODER_ID = 12;   
     public static final int RIGHT_FRONT_CANCODER_ID = 22;
@@ -144,6 +153,12 @@ public final class Constants {
     //public static final double limelight2Height = 0.2921; //meters, 11.5 inches
     //public static final double limelight2Degree = -35;
     //public static final double limelight2CenterOffset = 0.42545; //meters, 16.75 inches
+  }
+
+  public static class Algae {
+    
+    public static final double speedAlgaeControl  =  0.15;  
+
   }
   
   public static final double kTrackWidth = Units.inchesToMeters(21.5); //From CAD: 21.5 // distance between left and right wheels

@@ -14,6 +14,7 @@ import frc.robot.subsystems.CoralControl;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.SwerveSubsystem;
+import pabeles.concurrency.ConcurrencyOps.Reset;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -48,6 +50,12 @@ public class RobotContainer {
   public static JoystickButton IntakeAlgaeButton;
   public static JoystickButton OuttakeAlgaeButton;
 
+  public static JoystickButton ResetElevatorPosButton;
+
+  public static JoystickButton ElevatorLevelOne;
+  public static JoystickButton ElevatorLevelTwo;
+  public static JoystickButton ElevatorLevelThree;
+
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
   public static final AlgaeArm algaeArm = new AlgaeArm();
   public static final AlgaeControl algaeControl = new AlgaeControl();
@@ -69,6 +77,13 @@ public class RobotContainer {
     // Define Joystick buttons
     IntakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,2);
     OuttakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,8);
+
+    ElevatorLevelOne = new JoystickButton(BUTTON_JOYSTICK,3);
+    ElevatorLevelTwo = new JoystickButton(BUTTON_JOYSTICK,4);
+    ElevatorLevelThree = new JoystickButton(BUTTON_JOYSTICK,5);
+
+    ResetElevatorPosButton = new JoystickButton(BUTTON_JOYSTICK,11);
+
     // Configure the trigger bindings
     configureBindings();
 
@@ -78,6 +93,7 @@ public class RobotContainer {
       autoChooser = AutoBuilder.buildAutoChooser();
       // Default auto will be `Commands.none()`
     SmartDashboard.putData("Auto Chooser", autoChooser);
+
   }
   
   public static final class Buttons
@@ -115,8 +131,18 @@ public class RobotContainer {
 
 
     //Button Joystick Commands
-    IntakeAlgaeButton.toggleOnTrue(new InstantCommand(() -> algaeControl.setSpeeds(0.1)));
-    OuttakeAlgaeButton.whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(0.1)));
+    IntakeAlgaeButton.whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl)));
+    IntakeAlgaeButton.whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
+
+    OuttakeAlgaeButton.whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl * -1)));
+    OuttakeAlgaeButton.whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
+
+    ResetElevatorPosButton.whileTrue(new InstantCommand(() -> elevator.resetPos(0)));
+
+    ElevatorLevelOne.toggleOnTrue(new RunCommand(() -> elevator.SetLevel(Constants.OperatorConstants.LEVEL_ONE_HEIGHT), elevator).until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_ONE_HEIGHT) <= 0.1));
+    ElevatorLevelTwo.toggleOnTrue(new RunCommand(() -> elevator.SetLevel(Constants.OperatorConstants.LEVEL_TWO_HEIGHT), elevator).until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_TWO_HEIGHT) <= 0.1));
+    ElevatorLevelThree.toggleOnTrue(new RunCommand(() -> elevator.SetLevel(Constants.OperatorConstants.LEVEL_THREE_HEIGHT), elevator).until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_THREE_HEIGHT) <= 0.1));
+
   }
 
   /**

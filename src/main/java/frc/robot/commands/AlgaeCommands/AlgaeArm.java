@@ -7,9 +7,9 @@ package frc.robot.commands.AlgaeCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AlgaeArmPosition extends Command {
+public class AlgaeArm extends Command {
   /** Creates a new AlgaeArm. */
-  public AlgaeArmPosition() {
+  public AlgaeArm() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
