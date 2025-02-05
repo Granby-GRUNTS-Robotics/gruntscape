@@ -12,13 +12,13 @@ import frc.robot.commands.ElevatorCommands.ElevatorLevels;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
-public class ElevatorHomeAuto extends SequentialCommandGroup {
-  /** Creates a new ElevatorHomeAuto. */
-  public ElevatorHomeAuto() {
+public class ElevatorLevelOneAuto extends SequentialCommandGroup {
+  /** Creates a new ElevatorLevelOneAuto. */
+  public ElevatorLevelOneAuto() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ElevatorLevels(Constants.OperatorConstants.HOME_POSITION)
+        new ElevatorLevels(Constants.OperatorConstants.LEVEL_ONE_HEIGHT)
     );
   }
 }
