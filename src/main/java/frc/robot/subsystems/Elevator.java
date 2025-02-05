@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 //import com.revrobotics.servohub.ServoHub.ResetMode;
@@ -47,7 +48,7 @@ public class Elevator extends SubsystemBase {
     .velocityConversionFactor(1);
    config.closedLoop
     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-    .pid(.15, 0.0, 0.0);
+    .pid(0.02, 0.0, 0.0);
       
     //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
     ElevatorDirectionMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
@@ -56,41 +57,19 @@ public class Elevator extends SubsystemBase {
 
   }
 
-  public double getCurrentPosition() {
+  public double getCurrentElevatorPosition() {
     return ELEVATOR_DIRECTION_ENCODER.getPosition();
-}
+  }
 
-public void resetPos(double pos) {
-   ELEVATOR_DIRECTION_ENCODER.setPosition(pos);
-}
-
+  public void setElevatorPosition(double wantedPosition) {
+    //ELEVATOR_DIRECTION_ENCODER.setPosition(pos);
+    elevatorPid.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+  } 
 
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Position", ELEVATOR_DIRECTION_ENCODER.getPosition());
-  }
-
-
-  public void SetLevel(double position) {
-
-    double wantedPos = position;
-    double currentPos = ELEVATOR_DIRECTION_ENCODER.getPosition();
-    double tolerance = 0.1; // prevent jittering when reaching wanted position
-
-    if (Math.abs(currentPos - wantedPos) <= tolerance) {
-        SetSpeeds(0);
-      }
-       else if (currentPos < wantedPos) {
-        SetSpeeds(0.045);
-      }
-      else {
-        SetSpeeds(-0.045);
-      }
-  }
-
-  public void SetSpeeds(double speed) {
-    ElevatorDirectionMotor.set(speed);
   }
 }
 

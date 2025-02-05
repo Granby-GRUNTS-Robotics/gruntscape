@@ -5,12 +5,21 @@
 package frc.robot.commands.ElevatorCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.Constants;
+import frc.robot.subsystems.Elevator;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ElevatorHome extends Command {
   /** Creates a new ElevatorHome. */
-  public ElevatorHome() {
+ 
+  Elevator elevator;
+  double wantedPosition;
+  double tolerance;
+
+  public ElevatorHome(double wantedPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.wantedPosition = wantedPosition;
+
+    addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -19,7 +28,9 @@ public class ElevatorHome extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    new ElevatorHome(wantedPosition);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -28,6 +39,6 @@ public class ElevatorHome extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (Math.abs(elevator.getCurrentElevatorPosition() - wantedPosition) <= Constants.OperatorConstants.tolerance);
   }
 }

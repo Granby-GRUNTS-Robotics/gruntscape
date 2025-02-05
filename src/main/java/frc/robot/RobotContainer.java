@@ -50,11 +50,11 @@ public class RobotContainer {
   public static JoystickButton IntakeAlgaeButton;
   public static JoystickButton OuttakeAlgaeButton;
 
-  public static JoystickButton ResetElevatorPosButton;
-
   public static JoystickButton ElevatorLevelOne;
   public static JoystickButton ElevatorLevelTwo;
   public static JoystickButton ElevatorLevelThree;
+  public static JoystickButton ElevatorHome;
+
 
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
   public static final AlgaeArm algaeArm = new AlgaeArm();
@@ -82,7 +82,7 @@ public class RobotContainer {
     ElevatorLevelTwo = new JoystickButton(BUTTON_JOYSTICK,4);
     ElevatorLevelThree = new JoystickButton(BUTTON_JOYSTICK,5);
 
-    ResetElevatorPosButton = new JoystickButton(BUTTON_JOYSTICK,11);
+    ElevatorHome = new JoystickButton(BUTTON_JOYSTICK, 6);
 
     // Configure the trigger bindings
     configureBindings();
@@ -137,11 +137,11 @@ public class RobotContainer {
     OuttakeAlgaeButton.whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl * -1)));
     OuttakeAlgaeButton.whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
 
-    ResetElevatorPosButton.whileTrue(new InstantCommand(() -> elevator.resetPos(0)));
-
-    ElevatorLevelOne.toggleOnTrue(new RunCommand(() -> elevator.SetLevel(Constants.OperatorConstants.LEVEL_ONE_HEIGHT), elevator).until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_ONE_HEIGHT) <= 0.1));
-    ElevatorLevelTwo.toggleOnTrue(new RunCommand(() -> elevator.SetLevel(Constants.OperatorConstants.LEVEL_TWO_HEIGHT), elevator).until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_TWO_HEIGHT) <= 0.1));
-    ElevatorLevelThree.toggleOnTrue(new RunCommand(() -> elevator.SetLevel(Constants.OperatorConstants.LEVEL_THREE_HEIGHT), elevator).until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_THREE_HEIGHT) <= 0.1));
+    
+    ElevatorHome.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.HOME_POSITION), elevator));
+    ElevatorLevelOne.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_ONE_HEIGHT), elevator)); // .until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_ONE_HEIGHT) <= Constants.OperatorConstants.tolerance)
+    ElevatorLevelTwo.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_TWO_HEIGHT), elevator)); //.until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_TWO_HEIGHT) <= Constants.OperatorConstants.tolerance)
+    ElevatorLevelThree.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_THREE_HEIGHT), elevator)); // .until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_THREE_HEIGHT) <= Constants.OperatorConstants.tolerance)
 
   }
 

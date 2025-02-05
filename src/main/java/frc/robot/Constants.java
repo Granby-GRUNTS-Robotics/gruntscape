@@ -42,10 +42,13 @@ public final class Constants {
     public static final int ELEVATOR_DIRECTION_MOTOR_ID = 5;
 
     // Elevator Levels
+    public static final int HOME_POSITION = 0; // rotations's
+
     public static final int LEVEL_ONE_HEIGHT = 10; // rotations's
     public static final int LEVEL_TWO_HEIGHT = 20; // rotations's
     public static final int LEVEL_THREE_HEIGHT = 30; // rotations's
 
+    public static final double tolerance = 0.1; // prevent jittering when reaching wanted position (elevator)
 
     //Absolute Encoders
     public static final int LEFT_FRONT_CANCODER_ID = 12;   
