@@ -153,10 +153,12 @@ public class RobotContainer {
     xboxController.start().whileTrue(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 1)));
     xboxController.start().whileFalse(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 0)));
     xboxController.leftStick().toggleOnTrue(new InstantCommand(() -> swerveSubsystem.slowModeToggle()));
-    xboxController.a().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl)));
-    xboxController.a().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
-    xboxController.b().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl * -1)));
-    xboxController.b().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
+
+    xboxController.a().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.intakeCurrentAlgaeControl))); // INTAKE
+    xboxController.a().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(1))); // INTAKE
+
+    xboxController.b().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.outtakeCurrentAlgaeControl))); // OUTTAKE
+    xboxController.b().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0))); // OUTTAKE
     
     xboxController.povDown().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_HOME_POSITION), algaeArm));
     xboxController.povLeft().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_LEVEL_ONE), algaeArm));
