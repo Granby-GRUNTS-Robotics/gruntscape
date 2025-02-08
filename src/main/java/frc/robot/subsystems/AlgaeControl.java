@@ -19,15 +19,10 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class AlgaeControl extends SubsystemBase {
-  private final PIDController AlgaePIDControllerRight;
-  private final PIDController AlgaePIDControllerLeft;
 
   /** Creates a new AlgaeControl. */
   private final static SparkMax AlgaeControlMotorRight = new SparkMax(Constants.OperatorConstants.RIGHT_ALGAE_CONTROL_MOTOR_ID,MotorType.kBrushless);
   private final static SparkMax AlgaeControlMotorLeft = new SparkMax(Constants.OperatorConstants.LEFT_ALGAE_CONTROL_MOTOR_ID,MotorType.kBrushless);
-
-  private static final RelativeEncoder RIGHT_ALGAE_ENCODER = AlgaeControlMotorRight.getEncoder();
-  private static final RelativeEncoder LEFT_ALGAE_ENCODER = AlgaeControlMotorLeft.getEncoder();
   
   private static double intakeSpeedAlgae;
   private static double placementSpeedAlgae;
@@ -35,14 +30,10 @@ public class AlgaeControl extends SubsystemBase {
 
  // private static final PIDController RIGHT_ALGAE_CONTROLLER = AlgaePIDController;
 
-  public AlgaeControl() { 
-    
-    //AlgaeControlMotorRight.setSmartCurrentLimit(40);
+/*  public AlgaeControl() { 
 
-     AlgaePIDControllerRight = new PIDController(0.015, 0, 0);
-     AlgaePIDControllerLeft = new PIDController(0.015, 0, 0);
      
-  }
+  }*/
 
   @Override
   public void periodic() {

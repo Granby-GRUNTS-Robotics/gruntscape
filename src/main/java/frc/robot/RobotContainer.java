@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.ElevatorCommands.JoyElevatorControl;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.AlgaeControl;
 import frc.robot.subsystems.ClimberClamp;
@@ -47,13 +48,24 @@ public class RobotContainer {
 
   // Joystick buttons
   public static final Joystick BUTTON_JOYSTICK = new Joystick(1);
+  /*
+  
   public static JoystickButton IntakeAlgaeButton;
   public static JoystickButton OuttakeAlgaeButton;
+
+  public static JoystickButton ArmLevelOne;
+  public static JoystickButton ArmLevelTwo;
+  public static JoystickButton ArmLevelThree;
+  
+  */
 
   public static JoystickButton ElevatorLevelOne;
   public static JoystickButton ElevatorLevelTwo;
   public static JoystickButton ElevatorLevelThree;
   public static JoystickButton ElevatorHome;
+  public static JoystickButton MoveElevator;
+
+ // public static Joystick MoveElevator;
 
 
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
@@ -63,7 +75,7 @@ public class RobotContainer {
   public static final ClimberWinch climberWinch = new ClimberWinch();
   public static final CoralControl coralControl = new CoralControl();
   public static final Elevator elevator = new Elevator();
-  
+  public static final JoyElevatorControl elevatorController = new JoyElevatorControl(elevator, BUTTON_JOYSTICK);
   private final SendableChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -74,15 +86,28 @@ public class RobotContainer {
   public RobotContainer() {
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem, xboxController, Constants.isFieldCentric));
     
-    // Define Joystick buttons
+    // Define joystick buttons
+    
+    /*
+    
+    // Algae buttons
     IntakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,2);
     OuttakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,8);
 
+    ArmLevelOne = new JoystickButton(BUTTON_JOYSTICK, 0);
+    ArmLevelTwo = new JoystickButton(BUTTON_JOYSTICK, 0);
+    ArmLevelThree = new JoystickButton(BUTTON_JOYSTICK, 0);
+   
+    */
+
+    // Elevator buttons
     ElevatorLevelOne = new JoystickButton(BUTTON_JOYSTICK,3);
     ElevatorLevelTwo = new JoystickButton(BUTTON_JOYSTICK,4);
     ElevatorLevelThree = new JoystickButton(BUTTON_JOYSTICK,5);
 
     ElevatorHome = new JoystickButton(BUTTON_JOYSTICK, 6);
+
+    MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
 
     // Configure the trigger bindings
     configureBindings();
@@ -128,8 +153,18 @@ public class RobotContainer {
     xboxController.start().whileTrue(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 1)));
     xboxController.start().whileFalse(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 0)));
     xboxController.leftStick().toggleOnTrue(new InstantCommand(() -> swerveSubsystem.slowModeToggle()));
+    xboxController.a().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl)));
+    xboxController.a().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
+    xboxController.b().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl * -1)));
+    xboxController.b().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
+    
+    xboxController.povDown().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_HOME_POSITION), algaeArm));
+    xboxController.povLeft().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_LEVEL_ONE), algaeArm));
+    xboxController.povRight().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_LEVEL_TWO), algaeArm));
+    xboxController.povUp().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_LEVEL_THREE), algaeArm));
 
 
+    /*
     //Button Joystick Commands
     IntakeAlgaeButton.whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl)));
     IntakeAlgaeButton.whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
@@ -137,12 +172,14 @@ public class RobotContainer {
     OuttakeAlgaeButton.whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.speedAlgaeControl * -1)));
     OuttakeAlgaeButton.whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
 
-    
+    */
+
     ElevatorHome.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.HOME_POSITION), elevator));
     ElevatorLevelOne.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_ONE_HEIGHT), elevator)); // .until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_ONE_HEIGHT) <= Constants.OperatorConstants.tolerance)
     ElevatorLevelTwo.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_TWO_HEIGHT), elevator)); //.until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_TWO_HEIGHT) <= Constants.OperatorConstants.tolerance)
     ElevatorLevelThree.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_THREE_HEIGHT), elevator)); // .until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_THREE_HEIGHT) <= Constants.OperatorConstants.tolerance)
-
+   
+    MoveElevator.whileTrue(new JoyElevatorControl(elevator, BUTTON_JOYSTICK));
   }
 
   /**

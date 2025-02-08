@@ -29,7 +29,6 @@ public class Elevator extends SubsystemBase {
 
   //private final PIDController ElevatorDirection;
   private final static SparkMax ElevatorDirectionMotor = new SparkMax(Constants.OperatorConstants.ELEVATOR_DIRECTION_MOTOR_ID, MotorType.kBrushless);
-  //private static final SparkClosedLoopController LEAD_HOOK_CONTROLLER = ElevatorDirectionMotor.getClosedLoopController();
   SparkMaxConfig config = new SparkMaxConfig();
   SparkClosedLoopController elevatorPid = ElevatorDirectionMotor.getClosedLoopController();
 
@@ -57,15 +56,18 @@ public class Elevator extends SubsystemBase {
 
   }
 
-  public double getCurrentElevatorPosition() {
-    return ELEVATOR_DIRECTION_ENCODER.getPosition();
-  }
-
   public void setElevatorPosition(double wantedPosition) {
     //ELEVATOR_DIRECTION_ENCODER.setPosition(pos);
     elevatorPid.setReference(wantedPosition, SparkMax.ControlType.kPosition);
   } 
 
+  public void moveElevatorPositionManual(double percent) {
+    elevatorPid.setReference(percent, SparkMax.ControlType.kDutyCycle);
+  }
+
+  public double getCurrentElevatorPosition() {
+    return ELEVATOR_DIRECTION_ENCODER.getPosition();
+  }
 
   @Override
   public void periodic() {

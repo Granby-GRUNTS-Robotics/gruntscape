@@ -35,11 +35,23 @@ public final class Constants {
     public static final int RIGHT_BACK_DIRECTIION_MOTOR_ID = 41;
 
     //Algae Control
-    public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 3;
+    public static final int ALGAE_ARM_CONTROL_MOTOR_ID = 5;
+
+
+    public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 6;
     public static final int LEFT_ALGAE_CONTROL_MOTOR_ID = 4;
 
+    // Algae Arm Rotations
+    public static final int ARM_HOME_POSITION = 0; // rotations's
+
+    public static final int ARM_LEVEL_ONE = 5; // rotations's
+    public static final int ARM_LEVEL_TWO = 10; // rotations's
+    public static final int ARM_LEVEL_THREE = 15; // rotations's
+
+
+
     // Elevator Motors
-    public static final int ELEVATOR_DIRECTION_MOTOR_ID = 5;
+    public static final int ELEVATOR_DIRECTION_MOTOR_ID = 3;
 
     // Elevator Levels
     public static final int HOME_POSITION = 0; // rotations's
