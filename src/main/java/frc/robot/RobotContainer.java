@@ -11,6 +11,7 @@ import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.AlgaeControl;
 import frc.robot.subsystems.ClimberClamp;
 import frc.robot.subsystems.ClimberWinch;
+import frc.robot.subsystems.CoralArm;
 import frc.robot.subsystems.CoralControl;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LimeLight;
@@ -64,7 +65,8 @@ public class RobotContainer {
   public static JoystickButton ElevatorLevelThree;
   public static JoystickButton ElevatorHome;
   public static JoystickButton MoveElevator;
-
+  public static JoystickButton CoralArmHome;
+  public static JoystickButton CoralButton;
  // public static Joystick MoveElevator;
 
 
@@ -74,6 +76,8 @@ public class RobotContainer {
   public static final ClimberClamp climberClamp = new ClimberClamp();
   public static final ClimberWinch climberWinch = new ClimberWinch();
   public static final CoralControl coralControl = new CoralControl();
+  public static final CoralArm coralArm = new CoralArm();
+
   public static final Elevator elevator = new Elevator();
   public static final JoyElevatorControl elevatorController = new JoyElevatorControl(elevator, BUTTON_JOYSTICK);
   private final SendableChooser<Command> autoChooser;
@@ -88,17 +92,20 @@ public class RobotContainer {
     
     // Define joystick buttons
     
-    /*
+    
     
     // Algae buttons
-    IntakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,2);
+    CoralButton = new JoystickButton(BUTTON_JOYSTICK,11);
+    /* 
     OuttakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,8);
 
     ArmLevelOne = new JoystickButton(BUTTON_JOYSTICK, 0);
     ArmLevelTwo = new JoystickButton(BUTTON_JOYSTICK, 0);
     ArmLevelThree = new JoystickButton(BUTTON_JOYSTICK, 0);
-   
-    */
+   */
+    
+   //Coral Buttons
+   CoralArmHome = new JoystickButton(BUTTON_JOYSTICK, 12);
 
     // Elevator buttons
     ElevatorLevelOne = new JoystickButton(BUTTON_JOYSTICK,3);
@@ -160,10 +167,10 @@ public class RobotContainer {
     xboxController.b().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.outtakeCurrentAlgaeControl))); // OUTTAKE
     xboxController.b().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0))); // OUTTAKE
     
-    xboxController.povDown().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_HOME_POSITION), algaeArm));
-    xboxController.povLeft().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_LEVEL_ONE), algaeArm));
-    xboxController.povRight().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_LEVEL_TWO), algaeArm));
-    xboxController.povUp().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.OperatorConstants.ARM_LEVEL_THREE), algaeArm));
+    xboxController.povDown().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_HOME_POSITION), algaeArm));
+    xboxController.povLeft().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_ONE), algaeArm));
+    xboxController.povRight().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_TWO), algaeArm));
+    xboxController.povUp().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE), algaeArm));
 
 
     /*
@@ -175,6 +182,8 @@ public class RobotContainer {
     OuttakeAlgaeButton.whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
 
     */
+    CoralButton.toggleOnTrue(new RunCommand(() -> coralControl.setCoralControlRotations(10), coralControl));
+    CoralArmHome.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(0), coralArm));
 
     ElevatorHome.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.HOME_POSITION), elevator));
     ElevatorLevelOne.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_ONE_HEIGHT), elevator)); // .until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_ONE_HEIGHT) <= Constants.OperatorConstants.tolerance)

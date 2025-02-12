@@ -34,24 +34,8 @@ public final class Constants {
     public static final int RIGHT_BACK_SPEED_MOTOR_ID = 40;
     public static final int RIGHT_BACK_DIRECTIION_MOTOR_ID = 41;
 
-    //Algae Control
-    public static final int ALGAE_ARM_CONTROL_MOTOR_ID = 5;
-
-
-    public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 3;
-    public static final int LEFT_ALGAE_CONTROL_MOTOR_ID = 4;
-
-    // Algae Arm Rotations
-    public static final int ARM_HOME_POSITION = 0; // rotations's
-
-    public static final int ARM_LEVEL_ONE = 5; // rotations's
-    public static final int ARM_LEVEL_TWO = 10; // rotations's
-    public static final int ARM_LEVEL_THREE = 15; // rotations's
-
-
-
     // Elevator Motors
-    public static final int ELEVATOR_DIRECTION_MOTOR_ID = 6;
+    public static final int ELEVATOR_DIRECTION_MOTOR_ID = 61;
 
     // Elevator Levels
     public static final int HOME_POSITION = 0; // rotations's
@@ -173,7 +157,32 @@ public final class Constants {
   public static class Algae {
     
     public static final double intakeCurrentAlgaeControl  =  10;  
-    public static final double outtakeCurrentAlgaeControl  =  -10;  
+    public static final double outtakeCurrentAlgaeControl  =  -10; 
+    
+    
+    //Algae Control
+    public static final int ALGAE_ARM_CONTROL_MOTOR_ID = 60;
+
+
+    public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 3;
+    public static final int LEFT_ALGAE_CONTROL_MOTOR_ID = 4;
+
+    // Algae Arm Rotations
+    public static final int ARM_HOME_POSITION = 0; // rotations's
+
+    public static final int ARM_LEVEL_ONE = 6; // rotations's
+    public static final int ARM_LEVEL_TWO = 12; // rotations's
+    public static final int ARM_LEVEL_THREE = 16; // rotations's 
+
+  }
+
+  public static class Coral {
+    public static int CORAL_DIRECTION_LEFT_MOTOR_ID = 6;
+    public static int CORAL_DIRECTION_RIGHT_MOTOR_ID = 7;
+    public static int CORAL_ARM_MOTOR_ID = 8;
+
+    public static double CORAL_ARM_POSITIONS = 1;
+
 
   }
   

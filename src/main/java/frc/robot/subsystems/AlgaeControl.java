@@ -23,8 +23,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 public class AlgaeControl extends SubsystemBase {
 
   /** Creates a new AlgaeControl. */
-  private final static SparkMax AlgaeControlMotorRight = new SparkMax(Constants.OperatorConstants.RIGHT_ALGAE_CONTROL_MOTOR_ID,MotorType.kBrushless);
-  private final static SparkMax AlgaeControlMotorLeft = new SparkMax(Constants.OperatorConstants.LEFT_ALGAE_CONTROL_MOTOR_ID,MotorType.kBrushless);
+  private final static SparkMax AlgaeControlMotorRight = new SparkMax(Constants.Algae.RIGHT_ALGAE_CONTROL_MOTOR_ID,MotorType.kBrushless);
+  private final static SparkMax AlgaeControlMotorLeft = new SparkMax(Constants.Algae.LEFT_ALGAE_CONTROL_MOTOR_ID,MotorType.kBrushless);
   SparkMaxConfig config = new SparkMaxConfig();
   SparkClosedLoopController algaeRightPid = AlgaeControlMotorRight.getClosedLoopController();
   SparkClosedLoopController algaeLeftPid = AlgaeControlMotorLeft.getClosedLoopController();
