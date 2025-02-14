@@ -12,6 +12,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,7 +27,7 @@ public class CoralArm extends SubsystemBase {
    private final static SparkMax CoralArm = new SparkMax(Constants.Coral.CORAL_ARM_MOTOR_ID, MotorType.kBrushless);
   SparkMaxConfig config = new SparkMaxConfig();
   SparkClosedLoopController CoralArmPID = CoralArm.getClosedLoopController();  
-  private static final RelativeEncoder CORAL_ARM_ENCODER = CoralArm.getEncoder();
+ // private static final RelativeEncoder CORAL_ARM_ENCODER = CoralArm.getEncoder();
   private static final AbsoluteEncoder CORAL_ARM_ENCODER_ABSOLUTE = CoralArm.getAbsoluteEncoder();
 
 
@@ -41,12 +42,13 @@ public class CoralArm extends SubsystemBase {
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
    config.closedLoop.maxMotion
-    .maxVelocity(0.25)
+    .maxVelocity(1)
     .maxAcceleration(1)
     .allowedClosedLoopError(0.01);
     config.closedLoop
-    .pid(0.02, 0.0, 0.0)
-    .outputRange(kMinOutput, kMaxOutput);
+    .pid(1, 0.0, 0.0)
+    .outputRange(kMinOutput, kMaxOutput)
+    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
    //config.closedLoop
    // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
    // 
@@ -54,7 +56,7 @@ public class CoralArm extends SubsystemBase {
     //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
     CoralArm.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
-    CORAL_ARM_ENCODER.setPosition(0);
+    //CORAL_ARM_ENCODER.setPosition(0);
   }
 
   public void setCoralArmPosition(double wantedPosition) {
@@ -69,7 +71,7 @@ public class CoralArm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Coral Arm Position", CORAL_ARM_ENCODER.getPosition());
+    //SmartDashboard.putNumber("Coral Arm Position", CORAL_ARM_ENCODER.getPosition());
     SmartDashboard.putNumber("Coral Arm Absolute Position", getAbsolutePosition());
 
   }

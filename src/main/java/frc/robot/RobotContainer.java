@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.CoralCommands.CoralIntake;
 import frc.robot.commands.ElevatorCommands.JoyElevatorControl;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.AlgaeControl;
@@ -66,8 +67,11 @@ public class RobotContainer {
   public static JoystickButton ElevatorHome;
   public static JoystickButton MoveElevator;
   public static JoystickButton CoralArmHome;
+  public static JoystickButton CoralArmPosOne;
+  public static JoystickButton CoralArmPosTwo;
+  public static JoystickButton CoralArmPosThree;
   public static JoystickButton CoralButton;
- // public static Joystick MoveElevator;
+  public static JoystickButton PlaceCoral;
 
 
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
@@ -77,7 +81,7 @@ public class RobotContainer {
   public static final ClimberWinch climberWinch = new ClimberWinch();
   public static final CoralControl coralControl = new CoralControl();
   public static final CoralArm coralArm = new CoralArm();
-
+  public static final CoralIntake coralIntakeControl = new CoralIntake(coralControl);
   public static final Elevator elevator = new Elevator();
   public static final JoyElevatorControl elevatorController = new JoyElevatorControl(elevator, BUTTON_JOYSTICK);
   private final SendableChooser<Command> autoChooser;
@@ -95,7 +99,7 @@ public class RobotContainer {
     
     
     // Algae buttons
-    CoralButton = new JoystickButton(BUTTON_JOYSTICK,11);
+    CoralButton = new JoystickButton(BUTTON_JOYSTICK,6);
     /* 
     OuttakeAlgaeButton = new JoystickButton(BUTTON_JOYSTICK,8);
 
@@ -106,13 +110,18 @@ public class RobotContainer {
     
    //Coral Buttons
    CoralArmHome = new JoystickButton(BUTTON_JOYSTICK, 12);
+   CoralArmPosOne = new JoystickButton(BUTTON_JOYSTICK, 11);
+   CoralArmPosTwo = new JoystickButton(BUTTON_JOYSTICK, 9);
+   CoralArmPosThree = new JoystickButton(BUTTON_JOYSTICK, 7);
+   PlaceCoral = new JoystickButton(BUTTON_JOYSTICK, 8);
+
 
     // Elevator buttons
     ElevatorLevelOne = new JoystickButton(BUTTON_JOYSTICK,3);
     ElevatorLevelTwo = new JoystickButton(BUTTON_JOYSTICK,4);
     ElevatorLevelThree = new JoystickButton(BUTTON_JOYSTICK,5);
 
-    ElevatorHome = new JoystickButton(BUTTON_JOYSTICK, 6);
+    //ElevatorHome = new JoystickButton(BUTTON_JOYSTICK, 6);
 
     MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
 
@@ -182,14 +191,22 @@ public class RobotContainer {
     OuttakeAlgaeButton.whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0)));
 
     */
-    CoralButton.toggleOnTrue(new RunCommand(() -> coralControl.setCoralControlRotations(10), coralControl));
-    CoralArmHome.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(0), coralArm));
+    CoralButton.toggleOnTrue(new RunCommand(() -> coralControl.setCoralControlRotations(10)));
+    CoralArmHome.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_HOME), coralArm));
+    CoralArmPosOne.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_ONE), coralArm));
+    CoralArmPosTwo.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_TWO), coralArm));
+    CoralArmPosThree.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_THREE), coralArm));
+    
+    PlaceCoral.whileTrue(new RunCommand(() -> coralControl.placeCoral(true, 10)));
+    PlaceCoral.whileFalse(new RunCommand(() -> coralControl.placeCoral(false, 0)));
 
+   /*
     ElevatorHome.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.HOME_POSITION), elevator));
     ElevatorLevelOne.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_ONE_HEIGHT), elevator)); // .until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_ONE_HEIGHT) <= Constants.OperatorConstants.tolerance)
     ElevatorLevelTwo.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_TWO_HEIGHT), elevator)); //.until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_TWO_HEIGHT) <= Constants.OperatorConstants.tolerance)
     ElevatorLevelThree.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.LEVEL_THREE_HEIGHT), elevator)); // .until(() -> Math.abs(elevator.getCurrentPosition() - Constants.OperatorConstants.LEVEL_THREE_HEIGHT) <= Constants.OperatorConstants.tolerance)
-   
+   */
+
     MoveElevator.whileTrue(new JoyElevatorControl(elevator, BUTTON_JOYSTICK));
   }
 

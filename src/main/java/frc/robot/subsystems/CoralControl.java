@@ -13,6 +13,8 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -27,6 +29,8 @@ public class CoralControl extends SubsystemBase {
 
   private static final RelativeEncoder CORAL_CONTROL_LEFT_ENCODER = CoralControlLeft.getEncoder();
   private static final RelativeEncoder CORAL_CONTROL_RIGHT_ENCODER = CoralControlRight.getEncoder();
+
+  private static final DigitalInput IntakeBeam = new DigitalInput(9);
 
   public CoralControl() {
     double kMinOutput = -1;
@@ -59,17 +63,48 @@ public class CoralControl extends SubsystemBase {
   }
 
   public void setCoralControlRotations(double wantedPosition) {
-    CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
-    CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);
 
     //ELEVATOR_DIRECTION_ENCODER.setPosition(pos);
-    CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
-    CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+    //CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
+    //CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+    if(!IntakeBeam.get()) {
+    CoralControlRightPID.setReference(0, SparkMax.ControlType.kPosition);
+    CoralControlLeftPID.setReference(0, SparkMax.ControlType.kPosition);
+    }
+    else {
+      CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
+      CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);  
+      CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
+      CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+    }
 
   } 
+
+  public void placeCoral(boolean force, double wantedPosition) {
+    if(!IntakeBeam.get() && force == true) {
+      CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
+      CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);  
+
+      CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
+      CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+    }
+    else {
+      
+      CoralControlRightPID.setReference(0, SparkMax.ControlType.kPosition);
+      CoralControlLeftPID.setReference(0, SparkMax.ControlType.kPosition);
+  
+    }
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Bean Break Broken", !getLimitSwitch());
+  }
+
+  public boolean getLimitSwitch()
+  {
+    //return IntakeFirstLimitSwitch.get();
+    return IntakeBeam.get();
   }
 }
