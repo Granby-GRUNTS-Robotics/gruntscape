@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.CoralCommands.CoralIntake;
+import frc.robot.commands.CoralCommands.JoyCoralArm;
 import frc.robot.commands.ElevatorCommands.JoyElevatorControl;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.AlgaeControl;
@@ -71,6 +72,7 @@ public class RobotContainer {
   public static JoystickButton CoralArmPosTwo;
   public static JoystickButton CoralArmPosThree;
   public static JoystickButton CoralButton;
+  public static JoystickButton MoveCoralArm;
   public static JoystickButton PlaceCoral;
 
 
@@ -84,6 +86,7 @@ public class RobotContainer {
   public static final CoralIntake coralIntakeControl = new CoralIntake(coralControl);
   public static final Elevator elevator = new Elevator();
   public static final JoyElevatorControl elevatorController = new JoyElevatorControl(elevator, BUTTON_JOYSTICK);
+  public static final JoyCoralArm coralArmController = new JoyCoralArm(coralArm, BUTTON_JOYSTICK);
   private final SendableChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -115,6 +118,7 @@ public class RobotContainer {
    CoralArmPosThree = new JoystickButton(BUTTON_JOYSTICK, 7);
    PlaceCoral = new JoystickButton(BUTTON_JOYSTICK, 8);
 
+   MoveCoralArm = new JoystickButton(BUTTON_JOYSTICK, 2);
 
     // Elevator buttons
     ElevatorLevelOne = new JoystickButton(BUTTON_JOYSTICK,3);
@@ -192,10 +196,12 @@ public class RobotContainer {
 
     */
     CoralButton.toggleOnTrue(new RunCommand(() -> coralControl.setCoralControlRotations(10)));
-    CoralArmHome.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_HOME), coralArm));
-    CoralArmPosOne.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_ONE), coralArm));
-    CoralArmPosTwo.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_TWO), coralArm));
-    CoralArmPosThree.whileTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_THREE), coralArm));
+    CoralArmHome.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_HOME), coralArm));
+    CoralArmPosOne.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_ONE), coralArm));
+    CoralArmPosTwo.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_TWO), coralArm));
+    CoralArmPosThree.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_THREE), coralArm));
+
+    MoveCoralArm.whileTrue(new JoyCoralArm(coralArm, BUTTON_JOYSTICK));
     
     PlaceCoral.whileTrue(new RunCommand(() -> coralControl.placeCoral(true, 10)));
     PlaceCoral.whileFalse(new RunCommand(() -> coralControl.placeCoral(false, 0)));

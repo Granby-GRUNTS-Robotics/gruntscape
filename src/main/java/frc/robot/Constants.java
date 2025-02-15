@@ -183,10 +183,10 @@ public final class Constants {
 
     public static double CORAL_ARM_POSITIONS = 1;
 
-    public static double CORAL_ARM_POSITION_HOME = 0;
-    public static double CORAL_ARM_POSITION_ONE = 0.05;
-    public static double CORAL_ARM_POSITION_TWO = 0.1;
-    public static double CORAL_ARM_POSITION_THREE = 0.15;
+    public static double CORAL_ARM_POSITION_HOME = 1; //0.03
+    public static double CORAL_ARM_POSITION_ONE = 5; //0.05
+    public static double CORAL_ARM_POSITION_TWO = 10; //0.1
+    public static double CORAL_ARM_POSITION_THREE = 10; //0.15
 
   }
   

@@ -27,7 +27,7 @@ public class CoralArm extends SubsystemBase {
    private final static SparkMax CoralArm = new SparkMax(Constants.Coral.CORAL_ARM_MOTOR_ID, MotorType.kBrushless);
   SparkMaxConfig config = new SparkMaxConfig();
   SparkClosedLoopController CoralArmPID = CoralArm.getClosedLoopController();  
- // private static final RelativeEncoder CORAL_ARM_ENCODER = CoralArm.getEncoder();
+  private static final RelativeEncoder CORAL_ARM_ENCODER = CoralArm.getEncoder();
   private static final AbsoluteEncoder CORAL_ARM_ENCODER_ABSOLUTE = CoralArm.getAbsoluteEncoder();
 
 
@@ -42,15 +42,15 @@ public class CoralArm extends SubsystemBase {
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
    config.closedLoop.maxMotion
-    .maxVelocity(1)
-    .maxAcceleration(1)
-    .allowedClosedLoopError(0.01);
+    .maxVelocity(2000)
+    .maxAcceleration(3000)
+    .allowedClosedLoopError(0.003);
     config.closedLoop
-    .pid(1, 0.0, 0.0)
+    .pidf(0.2, 0.0, 0.05,0.001)
     .outputRange(kMinOutput, kMaxOutput)
-    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+    //.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
    //config.closedLoop
-   // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+   .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
    // 
       
     //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
@@ -60,18 +60,24 @@ public class CoralArm extends SubsystemBase {
   }
 
   public void setCoralArmPosition(double wantedPosition) {
-    CoralArmPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+    CoralArmPID.setReference(wantedPosition, SparkMax.ControlType.kMAXMotionPositionControl);
   } 
 
 
     public double getCurrentCoralArmRotation() {
-    return CORAL_ARM_ENCODER_ABSOLUTE.getPosition();
+   // return CORAL_ARM_ENCODER_ABSOLUTE.getPosition();
+      return CORAL_ARM_ENCODER.getPosition();
+
+  }
+
+  public void moveCoralArmPositionManual(double percent) {
+    CoralArmPID.setReference(percent, SparkMax.ControlType.kDutyCycle);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //SmartDashboard.putNumber("Coral Arm Position", CORAL_ARM_ENCODER.getPosition());
+    SmartDashboard.putNumber("Coral Arm Position", CORAL_ARM_ENCODER.getPosition());
     SmartDashboard.putNumber("Coral Arm Absolute Position", getAbsolutePosition());
 
   }
