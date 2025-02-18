@@ -44,7 +44,7 @@ public class CoralArm extends SubsystemBase {
    config.closedLoop.maxMotion
     .maxVelocity(2000)
     .maxAcceleration(3000)
-    .allowedClosedLoopError(0.003);
+    .allowedClosedLoopError(0.03);
     config.closedLoop
     .pidf(0.2, 0.0, 0.05,0.001)
     .outputRange(kMinOutput, kMaxOutput)
