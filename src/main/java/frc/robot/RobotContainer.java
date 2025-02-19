@@ -5,7 +5,9 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.FaceTag;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.AprilTagsCommands.FollowTag;
 import frc.robot.commands.CoralCommands.CoralIntake;
 import frc.robot.commands.CoralCommands.JoyCoralArm;
 import frc.robot.commands.ElevatorCommands.JoyElevatorControl;
@@ -74,6 +76,7 @@ public class RobotContainer {
   public static JoystickButton CoralButton;
   public static JoystickButton MoveCoralArm;
   public static JoystickButton PlaceCoral;
+  public static JoystickButton FaceTag;
 
 
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
@@ -85,6 +88,7 @@ public class RobotContainer {
   public static final CoralArm coralArm = new CoralArm();
   public static final CoralIntake coralIntakeControl = new CoralIntake(coralControl);
   public static final Elevator elevator = new Elevator();
+  public static final FaceTag faceTag = new FaceTag(swerveSubsystem, limeLight3g);
   public static final JoyElevatorControl elevatorController = new JoyElevatorControl(elevator, BUTTON_JOYSTICK);
   public static final JoyCoralArm coralArmController = new JoyCoralArm(coralArm, BUTTON_JOYSTICK);
   private final SendableChooser<Command> autoChooser;
@@ -129,10 +133,16 @@ public class RobotContainer {
 
     MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
 
+    //Face April Tag Button (Might be spagehhti)
+
+    FaceTag = new JoystickButton(BUTTON_JOYSTICK, 10);
+
     // Configure the trigger bindings
     configureBindings();
 
-     // CameraServer.ADDLIMELIGHTSTREAMTOSHUFFLEBOARD(something, something);
+     CameraServer.putVideo("limelight-threeg", 320, 240);
+
+      CameraServer.startAutomaticCapture(0);
 
       // This Should populate with all Autos (*.auto files) in deploy/pathplanner/autos directory. No need to populate here.
       autoChooser = AutoBuilder.buildAutoChooser();
@@ -205,6 +215,8 @@ public class RobotContainer {
     
     PlaceCoral.whileTrue(new RunCommand(() -> coralControl.placeCoral(true, 10)));
     PlaceCoral.whileFalse(new RunCommand(() -> coralControl.placeCoral(false, 0)));
+
+    FaceTag.whileTrue(new FollowTag(limeLight3g, swerveSubsystem));
 
    /*
     ElevatorHome.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.HOME_POSITION), elevator));

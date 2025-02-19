@@ -143,7 +143,7 @@ public class LimeLight extends SubsystemBase {
   public static double getDistanceFromAprilTag()
   {
     double target_height = (54 /*apriltag height*/)-(Constants.Limelight.limelight3HeightInches);
-    double tangent_target_angle = (Math.toDegrees(Math.tan((Constants.Limelight.limelight3Degree))) + NetworkTableInstance.getDefault().getTable("limelight-two").getEntry("ty").getDouble(0));
+    double tangent_target_angle = (Math.toDegrees(Math.tan((Constants.Limelight.limelight3Degree))) + NetworkTableInstance.getDefault().getTable("limelight-threeg").getEntry("ty").getDouble(0));
 
     return (target_height / tangent_target_angle);
   }
