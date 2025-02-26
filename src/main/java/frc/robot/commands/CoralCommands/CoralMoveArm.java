@@ -5,12 +5,19 @@
 package frc.robot.commands.CoralCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.subsystems.CoralArm;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class CoralPlace extends Command {
+public class CoralMoveArm extends Command {
   /** Creates a new CoralPlace. */
-  public CoralPlace() {
+
+  CoralArm coralArm;
+  double wantedPosition;
+  public CoralMoveArm(CoralArm coralArm, double wantedPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.coralArm = coralArm;
+    
   }
 
   // Called when the command is initially scheduled.
@@ -19,7 +26,9 @@ public class CoralPlace extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    coralArm.setCoralArmPosition(wantedPosition);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -28,6 +37,6 @@ public class CoralPlace extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (Math.abs(CoralArm.getCurrentCoralArmRotation() - Constants.Coral.CORAL_ARM_POSITION_ONE) < 1);
   }
 }

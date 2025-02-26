@@ -25,10 +25,10 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    public static final int LEFT_FRONT_SPEED_MOTOR_ID = 10;
-    public static final int LEFT_FRONT_DIRECTION_MOTOR_ID = 11;
-    public static final int RIGHT_FRONT_SPEED_MOTOR_ID = 20;
-    public static final int RIGHT_FRONT_DIRECTION_MOTOR_ID = 21;
+    public static final int LEFT_FRONT_SPEED_MOTOR_ID = 21;
+    public static final int LEFT_FRONT_DIRECTION_MOTOR_ID = 20;
+    public static final int RIGHT_FRONT_SPEED_MOTOR_ID = 11;
+    public static final int RIGHT_FRONT_DIRECTION_MOTOR_ID = 10;
     public static final int LEFT_BACK_SPEED_MOTOR_ID = 30;
     public static final int LEFT_BACK_DIRECTION_MOTOR_ID = 31;
     public static final int RIGHT_BACK_SPEED_MOTOR_ID = 40;
@@ -47,8 +47,8 @@ public final class Constants {
     public static final double tolerance = 0.1; // prevent jittering when reaching wanted position (elevator)
 
     //Absolute Encoders
-    public static final int LEFT_FRONT_CANCODER_ID = 12;   
-    public static final int RIGHT_FRONT_CANCODER_ID = 22;
+    public static final int LEFT_FRONT_CANCODER_ID = 22;   
+    public static final int RIGHT_FRONT_CANCODER_ID = 12;
     public static final int LEFT_BACK_CANCODER_ID = 32;
     public static final int RIGHT_BACK_CANCODER_ID = 42;
 
@@ -56,18 +56,18 @@ public final class Constants {
 
   public static final int PIGEON_ID = 1;
 
-  public static final double LEFT_FRONT_RADIAN_OFFSET = Math.toRadians(18.193);  //Math.toRadians(18.457); //19.424 18.457
-  public static final double RIGHT_FRONT_RADIAN_OFFSET = Math.toRadians(321.943); // Math.toRadians(321.943);  //Math.toRadians(144.932); //144.404 144.932
+  public static final double LEFT_FRONT_RADIAN_OFFSET = Math.toRadians(233.086);  //Math.toRadians(18.457); //19.424 18.457 // 18.193 //52.383
+  public static final double RIGHT_FRONT_RADIAN_OFFSET = Math.toRadians(288.633); // Math.toRadians(321.943);  //Math.toRadians(144.932); //144.404 144.932 //290.742
   public static final double LEFT_BACK_RADIAN_OFFSET = Math.toRadians(9.404); //Math.toRadians(10.283); //9.229 10.283
   public static final double RIGHT_BACK_RADIAN_OFFSET =  Math.toRadians(325.283);//Math.toRadians(147.92); //148.975 147.92
 
-  public static final boolean LEFT_FRONT_SPEED_IS_REVERSED = true; //false; 
+  public static final boolean LEFT_FRONT_SPEED_IS_REVERSED = false; // true? //false; 
   public static final boolean RIGHT_FRONT_SPEED_IS_REVERSED = true; //false; // true; 
   public static final boolean LEFT_BACK_SPEED_IS_REVERSED = false; 
   public static final boolean RIGHT_BACK_SPEED_IS_REVERSED = false; // true; 
 
-  public static final boolean LEFT_FRONT_DIRECTION_IS_REVERSED = false; //true;
-  public static final boolean RIGHT_FRONT_DIRECTION_IS_REVERSED = false; //true;
+  public static final boolean LEFT_FRONT_DIRECTION_IS_REVERSED = true; //true;
+  public static final boolean RIGHT_FRONT_DIRECTION_IS_REVERSED = true; //true;
   public static final boolean LEFT_BACK_DIRECTION_IS_REVERSED = true;
   public static final boolean RIGHT_BACK_DIRECTION_IS_REVERSED = true;
 

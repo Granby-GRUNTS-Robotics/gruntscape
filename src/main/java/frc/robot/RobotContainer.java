@@ -10,6 +10,9 @@ import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.AprilTagsCommands.FollowTag;
 import frc.robot.commands.CoralCommands.CoralIntake;
 import frc.robot.commands.CoralCommands.JoyCoralArm;
+import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionOne;
+import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionThree;
+import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionTwo;
 import frc.robot.commands.ElevatorCommands.JoyElevatorControl;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.AlgaeControl;
@@ -25,8 +28,10 @@ import pabeles.concurrency.ConcurrencyOps.Reset;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,7 +49,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static final LimeLight limeLight3  = new LimeLight(Constants.Limelight.limelightName3);
+ // public static final LimeLight limeLight3  = new LimeLight(Constants.Limelight.limelightName3);
   public static final LimeLight limeLight3g  = new LimeLight(Constants.Limelight.limelightName3g);
   
   // Xbox controller
@@ -54,7 +59,7 @@ public class RobotContainer {
   // Joystick buttons
   public static final Joystick BUTTON_JOYSTICK = new Joystick(1);
   /*
-  
+  swerveSubsystem
   public static JoystickButton IntakeAlgaeButton;
   public static JoystickButton OuttakeAlgaeButton;
 
@@ -79,7 +84,8 @@ public class RobotContainer {
   public static JoystickButton FaceTag;
 
 
-  public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3, limeLight3g);
+  public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3g); //////// ADD LIMELIGHT3 BACK IN!!!!!
+
   public static final AlgaeArm algaeArm = new AlgaeArm();
   public static final AlgaeControl algaeControl = new AlgaeControl();
   public static final ClimberClamp climberClamp = new ClimberClamp();
@@ -140,7 +146,11 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-     CameraServer.putVideo("limelight-threeg", 320, 240);
+   //  CameraServer.putVideo("limelight-threeg", 320, 240);
+
+     HttpCamera httpCamera = new HttpCamera("CoprocessorCamera", "http://limelight-threeg.local:5800/");
+     CameraServer.addCamera(httpCamera);
+     Shuffleboard.getTab("tab4").add(httpCamera);
 
       CameraServer.startAutomaticCapture(0);
 
@@ -207,9 +217,9 @@ public class RobotContainer {
     */
     CoralButton.toggleOnTrue(new RunCommand(() -> coralControl.setCoralControlRotations(10)));
     CoralArmHome.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_HOME), coralArm));
-    CoralArmPosOne.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_ONE), coralArm));
-    CoralArmPosTwo.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_TWO), coralArm));
-    CoralArmPosThree.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_THREE), coralArm));
+    CoralArmPosOne.toggleOnTrue(new CoralPositionOne(elevator, coralArm));
+    CoralArmPosTwo.toggleOnTrue(new CoralPositionTwo(elevator, coralArm));
+    CoralArmPosThree.toggleOnTrue(new CoralPositionThree(elevator, coralArm));
 
     MoveCoralArm.whileTrue(new JoyCoralArm(coralArm, BUTTON_JOYSTICK));
     

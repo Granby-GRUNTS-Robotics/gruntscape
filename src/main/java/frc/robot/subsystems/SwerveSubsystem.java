@@ -46,6 +46,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
+import frc.robot.LimelightHelpers.PoseEstimate;
 
 //import com.pathplanner.lib.auto.AutoBuilder;
 //import com.pathplanner.lib.util.PathPlannerLogging;
@@ -103,7 +105,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private SwerveDriveKinematics kinematics;  // Trying Pathplanner
 
   //////////XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  private LimeLight limelight3;
+  //private LimeLight limelight3;
   private LimeLight limelight3g;
 
   public RobotConfig config;
@@ -120,7 +122,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private static final edu.wpi.first.math.Vector<N3> visionMeasurementStdDevs = VecBuilder.fill(.5, 0.5,
       Units.degreesToRadians(5));
 
-  private final SwerveDrivePoseEstimator poseEstimator;
+  public final SwerveDrivePoseEstimator poseEstimator;
   private final Field2d field2d = new Field2d();
 
   private double previousPipelineTimestamp3 = 0;
@@ -149,7 +151,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   // Swerve subsystem constructor 
-  public SwerveSubsystem(LimeLight limelight3, LimeLight limelight3g) {
+  public SwerveSubsystem(/*LimeLight limelight3,*/ LimeLight limelight3g) {
 
   //Restart robot encoders on startup
   resetAllEncoders();
@@ -167,7 +169,7 @@ public class SwerveSubsystem extends SubsystemBase {
   );
 
   
-this.limelight3 = limelight3;
+//this.limelight3 = limelight3;
 this.limelight3g = limelight3g;
 
 NetworkTableInstance.getDefault().getTable("limelight-threeg").getEntry("pipeline").setInteger(0);
@@ -337,10 +339,23 @@ public void resetAllEncoders()
       //Transform3d camToTarget = target.getBestCameraToTarget();
       //Pose3d camPose = targetPose.transformBy(camToTarget.inverse());
 
-      poseEstimator.addVisionMeasurement(/*actualPose3.toPose2d()*/ actualPoseBut2d3, Timer.getFPGATimestamp() - (botPose[6]/1000.0));
+// First, tell Limelight your robot's current orientation
+double robotYaw = gyro.getYaw().getValueAsDouble();  
+///////LimelightHelpers.SetIMUMode(getName(), 0);
 
-      //poseEstimator.addVisionMeasurement(actualPoseBut2d3, Timer.getFPGATimestamp() - (botPose[6]/1000.0), visionMeasurementStdDevs);
+// Get the pose estimate
+LimelightHelpers.SetRobotOrientation(Constants.Limelight.limelightName3g, robotYaw, 0.0, 0.0, 0.0, 0.0, 0.0);
+LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.Limelight.limelightName3g);
 
+// Add it to your pose estimator
+poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5, 9999999));
+poseEstimator.addVisionMeasurement(
+    limelightMeasurement.pose,
+    limelightMeasurement.timestampSeconds
+);
+
+      // poseEstimator.addVisionMeasurement(actualPoseBut2d3, Timer.getFPGATimestamp()
+      // - (botPose[6]/1000.0), visionMeasurementStdDevs);
 
       ////poseEstimator.addVisionMeasurement(actualPose3.toPose2d(), Timer.getFPGATimestamp()); //actualPoseBut2d3, Timer.getFPGATimestamp() - (botPose[6]/1000.0));
     }

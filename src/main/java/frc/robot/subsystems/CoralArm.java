@@ -64,7 +64,7 @@ public class CoralArm extends SubsystemBase {
   } 
 
 
-    public double getCurrentCoralArmRotation() {
+    public static double getCurrentCoralArmRotation() {
    // return CORAL_ARM_ENCODER_ABSOLUTE.getPosition();
       return CORAL_ARM_ENCODER.getPosition();
 
