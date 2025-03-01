@@ -140,6 +140,12 @@ public final class Constants {
     public static double BRAKE_OFF = 109;
    }
 
+   
+ public static class HookConstants {
+  public static float hookMaxClimb = 0.1f;
+  public static float hookOpen = -1.6698889f;
+}
+
   public static class Limelight {
     public static final int APRIL_TAG_PIPELINE_INDEX = 0;
     public static final int RETRO_REFLECTIVE_TAPE_PIPELINE_INDEX = 1;

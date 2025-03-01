@@ -10,6 +10,7 @@ import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.AprilTagsCommands.FollowTag;
 import frc.robot.commands.AutoCommands.AutoPlaceCoralOne;
 import frc.robot.commands.AutoCommands.AutoPlaceCoralThree;
+import frc.robot.commands.ClimberCommands.JoyClimb;
 import frc.robot.commands.CoralCommands.CoralIntake;
 import frc.robot.commands.CoralCommands.JoyCoralArm;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPickup;
@@ -19,6 +20,7 @@ import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionTwo;
 import frc.robot.commands.ElevatorCommands.JoyElevatorControl;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.AlgaeControl;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberClamp;
 import frc.robot.subsystems.ClimberWinch;
 import frc.robot.subsystems.CoralArm;
@@ -73,7 +75,7 @@ public class RobotContainer {
   
   */
 
-  
+
 // Create joystick buttons
 
   public static JoystickButton ElevatorLevelOne;
@@ -89,14 +91,13 @@ public class RobotContainer {
   public static JoystickButton MoveCoralArm;
   public static JoystickButton PlaceCoral;
   public static JoystickButton FaceTag;
-
+  public static JoystickButton HookSafety;
 
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3g); //////// ADD LIMELIGHT3 BACK IN!!!!!
 
   public static final AlgaeArm algaeArm = new AlgaeArm();
   public static final AlgaeControl algaeControl = new AlgaeControl();
-  public static final ClimberClamp climberClamp = new ClimberClamp();
-  public static final ClimberWinch climberWinch = new ClimberWinch();
+  public static final Climber climber = new Climber();
   public static final CoralControl coralControl = new CoralControl();
   public static final CoralArm coralArm = new CoralArm();
   public static final CoralIntake coralIntakeControl = new CoralIntake(coralControl);
@@ -145,6 +146,9 @@ public class RobotContainer {
     //ElevatorHome = new JoystickButton(BUTTON_JOYSTICK, 6);
 
     MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
+
+
+    HookSafety = new JoystickButton(BUTTON_JOYSTICK, 6);
 
     //Face April Tag Button (Might be spagehhti)
 
@@ -238,6 +242,7 @@ public class RobotContainer {
     PlaceCoral.whileFalse(new RunCommand(() -> coralControl.placeCoral(false, 0)));
 
     FaceTag.whileTrue(new FollowTag(limeLight3g, swerveSubsystem));
+    HookSafety.whileTrue(new JoyClimb(climber, BUTTON_JOYSTICK));
 
    /*
     ElevatorHome.toggleOnTrue(new RunCommand(() -> elevator.setElevatorPosition(Constants.OperatorConstants.HOME_POSITION), elevator));
