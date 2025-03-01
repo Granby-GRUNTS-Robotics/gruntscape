@@ -8,8 +8,11 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.FaceTag;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.AprilTagsCommands.FollowTag;
+import frc.robot.commands.AutoCommands.AutoPlaceCoralOne;
+import frc.robot.commands.AutoCommands.AutoPlaceCoralThree;
 import frc.robot.commands.CoralCommands.CoralIntake;
 import frc.robot.commands.CoralCommands.JoyCoralArm;
+import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPickup;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionOne;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionThree;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionTwo;
@@ -26,6 +29,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import pabeles.concurrency.ConcurrencyOps.Reset;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
@@ -142,6 +146,10 @@ public class RobotContainer {
     //Face April Tag Button (Might be spagehhti)
 
     FaceTag = new JoystickButton(BUTTON_JOYSTICK, 10);
+
+       // Register Named Commands
+      NamedCommands.registerCommand("AutoPlaceCoralThree", new AutoPlaceCoralThree(elevator, coralArm,  coralControl));
+      NamedCommands.registerCommand("CoralPickup", new CoralPickup(elevator, coralArm,  coralControl));
 
     // Configure the trigger bindings
     configureBindings();
