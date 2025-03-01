@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.GenericHID;   //TCXbox
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class SwerveJoystickCmd extends Command {
@@ -82,10 +82,10 @@ public class SwerveJoystickCmd extends Command {
     directionSpeed = turnLimiter.calculate(directionSpeed) * maxAngularRPS; // Todd 8-22-23
     
     //if (Math.abs(swerveSubsystem.getZSpeed()) > .1)
-    if (Math.abs(xSpeed) + Math.abs(ySpeed) > .01)
+    if (Math.abs(xSpeed) + Math.abs(ySpeed) > .01 )
     directionSpeed = (directionSpeed * 2 - swerveSubsystem.getZSpeed());
 
-    if (Constants.isSlow)
+    if (Constants.isSlow || Elevator.getCurrentElevatorPosition() > Constants.OperatorConstants.LEVEL_TWO_HEIGHT)
     {
       xSpeed /= 2.5;
       ySpeed /= 2.5;
