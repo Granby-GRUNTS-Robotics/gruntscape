@@ -52,6 +52,9 @@ public final class Constants {
     public static final int LEFT_BACK_CANCODER_ID = 32;
     public static final int RIGHT_BACK_CANCODER_ID = 42;
 
+    // Hook 
+    public static int FIRST_HOOK_MOTOR_ID = 21;
+    public static int SECOND_HOOK_MOTOR_ID = 22;
   }
 
   public static final int PIGEON_ID = 1;
@@ -131,6 +134,11 @@ public final class Constants {
      // new ReplanningConfig()
     );
   }
+
+  public static class BrakeConstants {
+    public static double BRAKE_ON = 165;   
+    public static double BRAKE_OFF = 109;
+   }
 
   public static class Limelight {
     public static final int APRIL_TAG_PIPELINE_INDEX = 0;
