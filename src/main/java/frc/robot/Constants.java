@@ -25,9 +25,9 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    public static final int LEFT_FRONT_SPEED_MOTOR_ID = 21;
-    public static final int LEFT_FRONT_DIRECTION_MOTOR_ID = 20;
-    public static final int RIGHT_FRONT_SPEED_MOTOR_ID = 11;
+    public static final int LEFT_FRONT_SPEED_MOTOR_ID = 20;
+    public static final int LEFT_FRONT_DIRECTION_MOTOR_ID = 21;
+    public static final int RIGHT_FRONT_SPEED_MOTOR_ID = 11; //11; ///// come back to this one
     public static final int RIGHT_FRONT_DIRECTION_MOTOR_ID = 10;
     public static final int LEFT_BACK_SPEED_MOTOR_ID = 30;
     public static final int LEFT_BACK_DIRECTION_MOTOR_ID = 31;
@@ -35,16 +35,16 @@ public final class Constants {
     public static final int RIGHT_BACK_DIRECTIION_MOTOR_ID = 41;
 
     // Elevator Motors
-    public static final int ELEVATOR_DIRECTION_MOTOR_ID = 61;
+    public static final int ELEVATOR_DIRECTION_MOTOR_ID = 50; //50;
 
     // Elevator Levels
-    public static final int HOME_POSITION = 0; // rotations's
+    public static final int HOME_POSITION = 3; // rotations's
 
-    public static final int LEVEL_ONE_HEIGHT = 10; // rotations's
-    public static final int LEVEL_TWO_HEIGHT = 20; // rotations's
-    public static final int LEVEL_THREE_HEIGHT = 30; // rotations's
+    public static final double LEVEL_ONE_HEIGHT = 35.3; // rotations's
+    public static final double LEVEL_TWO_HEIGHT = 58.2; // rotations's
+    public static final double LEVEL_THREE_HEIGHT = 106.1; // rotations's
 
-    public static final double tolerance = 0.1; // prevent jittering when reaching wanted position (elevator)
+    public static final double tolerance = 2; // prevent jittering when reaching wanted position (elevator)
 
     //Absolute Encoders
     public static final int LEFT_FRONT_CANCODER_ID = 22;   
@@ -53,20 +53,20 @@ public final class Constants {
     public static final int RIGHT_BACK_CANCODER_ID = 42;
 
     // Hook 
-    public static int FIRST_HOOK_MOTOR_ID = 21;
-    public static int SECOND_HOOK_MOTOR_ID = 22;
+    public static int FIRST_HOOK_MOTOR_ID = 58;
+    public static int SECOND_HOOK_MOTOR_ID = 59;
   }
 
   public static final int PIGEON_ID = 1;
 
-  public static final double LEFT_FRONT_RADIAN_OFFSET = Math.toRadians(233.086);  //Math.toRadians(18.457); //19.424 18.457 // 18.193 //52.383
-  public static final double RIGHT_FRONT_RADIAN_OFFSET = Math.toRadians(288.633); // Math.toRadians(321.943);  //Math.toRadians(144.932); //144.404 144.932 //290.742
-  public static final double LEFT_BACK_RADIAN_OFFSET = Math.toRadians(9.404); //Math.toRadians(10.283); //9.229 10.283
-  public static final double RIGHT_BACK_RADIAN_OFFSET =  Math.toRadians(325.283);//Math.toRadians(147.92); //148.975 147.92
+  public static final double LEFT_FRONT_RADIAN_OFFSET  = 0; // (0.3388) * 2 * Math.PI; //Math.toRadians(233.086);  //Math.toRadians(18.457); //19.424 18.457 // 18.193 //52.383
+  public static final double RIGHT_FRONT_RADIAN_OFFSET = 0; // (0.4074) * 2 * Math.PI; //Math.toRadians(288.633); // Math.toRadians(321.943);  //Math.toRadians(144.932); //144.404 144.932 //290.742
+  public static final double LEFT_BACK_RADIAN_OFFSET  = 0; // (0.3195) * 2 * Math.PI; //Math.toRadians(10.283); //9.229 10.283
+  public static final double RIGHT_BACK_RADIAN_OFFSET = 0; // (0.0013) * 2 * Math.PI; // Math.toRadians(325.283);//Math.toRadians(147.92); //148.975 147.92
 
-  public static final boolean LEFT_FRONT_SPEED_IS_REVERSED = false; // true? //false; 
-  public static final boolean RIGHT_FRONT_SPEED_IS_REVERSED = true; //false; // true; 
-  public static final boolean LEFT_BACK_SPEED_IS_REVERSED = false; 
+  public static final boolean LEFT_FRONT_SPEED_IS_REVERSED = true; // true? //false; 
+  public static final boolean RIGHT_FRONT_SPEED_IS_REVERSED = false; //false; // true; 
+  public static final boolean LEFT_BACK_SPEED_IS_REVERSED = true; 
   public static final boolean RIGHT_BACK_SPEED_IS_REVERSED = false; // true; 
 
   public static final boolean LEFT_FRONT_DIRECTION_IS_REVERSED = true; //true;
@@ -174,16 +174,15 @@ public final class Constants {
     public static final double outtakeCurrentAlgaeControl  =  -10; 
     
     
-    //Algae Control
+    //Algae are move Control motor
     public static final int ALGAE_ARM_CONTROL_MOTOR_ID = 60;
 
-
+    //Algae Wheel motors
     public static final int RIGHT_ALGAE_CONTROL_MOTOR_ID = 3;
     public static final int LEFT_ALGAE_CONTROL_MOTOR_ID = 4;
 
-    // Algae Arm Rotations
+    // Algae Arm positions in Rotations
     public static final int ARM_HOME_POSITION = 0; // rotations's
-
     public static final int ARM_LEVEL_ONE = 6; // rotations's
     public static final int ARM_LEVEL_TWO = 12; // rotations's
     public static final int ARM_LEVEL_THREE = 16; // rotations's 
@@ -197,10 +196,10 @@ public final class Constants {
 
     public static double CORAL_ARM_POSITIONS = 1;
 
-    public static double CORAL_ARM_POSITION_HOME = 1; //0.03
-    public static double CORAL_ARM_POSITION_ONE = 5; //0.05
-    public static double CORAL_ARM_POSITION_TWO = 10; //0.1
-    public static double CORAL_ARM_POSITION_THREE = 10; //0.15
+    public static double CORAL_ARM_POSITION_HOME = 3.3; //0.03
+    public static double CORAL_ARM_POSITION_ONE = 3.55; //0.05
+    public static double CORAL_ARM_POSITION_TWO = 3.55; //0.1
+    public static double CORAL_ARM_POSITION_THREE = 12.15; //0.15
 
   }
   

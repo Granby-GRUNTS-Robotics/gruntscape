@@ -39,18 +39,18 @@ public class Elevator extends SubsystemBase {
     double kMinOutput = -1;
     double kMaxOutput = 1;
    config
-    .inverted(false)
+    .inverted(true)
     .idleMode(IdleMode.kBrake);
    config.encoder
     .positionConversionFactor(1)
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
    config.closedLoop.maxMotion
-    .maxVelocity(0.25)
-    .maxAcceleration(1)
-    .allowedClosedLoopError(0.01);
+    .maxVelocity(2000)
+    .maxAcceleration(3000)
+    .allowedClosedLoopError(0.03);
     config.closedLoop
-    .pid(0.1, 0.0, 0.0)
+    .pidf(0.3, 0.0, 0.0,0.000)
     .outputRange(kMinOutput, kMaxOutput);
 
     //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
@@ -62,7 +62,7 @@ public class Elevator extends SubsystemBase {
 
   public void setElevatorPosition(double wantedPosition) {
     //ELEVATOR_DIRECTION_ENCODER.setPosition(pos);
-    elevatorPid.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+    elevatorPid.setReference(wantedPosition, SparkMax.ControlType.kMAXMotionPositionControl);
   } 
 
   public void moveElevatorPositionManual(double percent) {

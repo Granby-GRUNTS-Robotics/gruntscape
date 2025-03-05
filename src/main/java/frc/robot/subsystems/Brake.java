@@ -18,7 +18,7 @@ public class Brake extends SubsystemBase {
   //private static final Servo BRAKE_SERVO_RIGHT = RobotMap.BRAKE_SERVOS_RIGHT;
   //private static final Servo BRAKE_SERVO_LEFT = RobotMap.BRAKE_SERVOS_LEFT;
 
-  public Brake() {
+  public void ActivateBrake() {
     setBrakePosition(Constants.BrakeConstants.BRAKE_ON);
   }
 

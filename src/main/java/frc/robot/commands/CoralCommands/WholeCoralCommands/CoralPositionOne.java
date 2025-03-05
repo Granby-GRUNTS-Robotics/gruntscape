@@ -23,7 +23,7 @@ public class CoralPositionOne extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         
-        new ElevatorLevels(Constants.OperatorConstants.LEVEL_ONE_HEIGHT),
+        new ElevatorLevels(elevator, Constants.OperatorConstants.LEVEL_ONE_HEIGHT),
          
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_ONE)
       

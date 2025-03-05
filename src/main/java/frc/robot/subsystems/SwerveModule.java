@@ -23,8 +23,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 
 /** Add your docs here. */
 
@@ -39,7 +42,9 @@ public class SwerveModule {
     
   
 
-  private final CANCoder cancoderDirectionEncoder;  // CANCoder is an absolute encoder
+  private final CANcoder cancoderDirectionEncoder;  // CANCoder is an absolute encoder
+  final CANcoderConfiguration m_cancoderConfig = new CANcoderConfiguration();
+
 
   private final boolean encoderReversed;
   private final double encoderOffsetRad;
@@ -50,7 +55,7 @@ public class SwerveModule {
     
     encoderOffsetRad = absoluteEncoderOffset;
     encoderReversed = absoluteEncoderReversed;
-    cancoderDirectionEncoder = new CANCoder(absoluteEncoderId);
+    cancoderDirectionEncoder = new CANcoder(absoluteEncoderId);
 
 
     speedMotor = new SparkMax(driveMotorId, MotorType.kBrushless);
@@ -59,6 +64,7 @@ public class SwerveModule {
     directionMotor = new SparkMax(turningMotorId, MotorType.kBrushless);
     SparkMaxConfig directionMotorConfig = new SparkMaxConfig();
 
+    
 
 speedMotorConfig
     .inverted(driveMotorReversed)
@@ -136,9 +142,13 @@ speedMotorConfig.closedLoop
 
   public double getAbsoluteEncoderRad()
   {
-    double angle = cancoderDirectionEncoder.getAbsolutePosition(); 
+    //double angle = cancoderDirectionEncoder.getAbsolutePosition(); 
+    double angle = cancoderDirectionEncoder.getAbsolutePosition().getValueAsDouble(); 
+    //angle +=  .01;
+    //System.out.printf("from getAbsoluteEncoderRad to see if angle is degrees or roations*******: %.2f%n", angle);
     //double angle = cancoderDirectionEncoder.getBusVoltage()/ RobotController.getVoltage5V(); 
-    angle = Math.toRadians(angle);
+    //////Scott's change from This line to one below this line:       angle = Math.toRadians(angle);
+    angle = angle * 2 * Math.PI;
     angle -= encoderOffsetRad;
     return angle * (encoderReversed ? -1.0 : 1.0);
   }
@@ -178,7 +188,7 @@ speedMotorConfig.closedLoop
   // Todd
   public double getAbsoluteEncoderAngle()
   {
-     double angleOnly = cancoderDirectionEncoder.getAbsolutePosition();
+     double angleOnly = cancoderDirectionEncoder.getAbsolutePosition().getValueAsDouble();
      return angleOnly;
   }
  

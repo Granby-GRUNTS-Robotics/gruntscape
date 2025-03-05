@@ -29,7 +29,7 @@ private static final SparkClosedLoopController FOLLOW_HOOK_PID = FOLLOW_HOOK_MOT
 SparkMaxConfig FollowerConfig = new SparkMaxConfig();
 
 SparkMaxConfig config = new SparkMaxConfig();
-private RelativeEncoder m_encoder;
+//private RelativeEncoder m_encoder;
 
 
 
@@ -69,7 +69,7 @@ private RelativeEncoder m_encoder;
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Hook Position", m_encoder.getPosition());
+   // SmartDashboard.putNumber("Hook Position", m_encoder.getPosition());
   }
 
   public void setClimberSpeed(double percent)

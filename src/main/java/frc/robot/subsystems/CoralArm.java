@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
-import com.revrobotics.AbsoluteEncoder;
+//import com.revrobotics.AbsoluteEncoder;
 
 public class CoralArm extends SubsystemBase {
   /** Creates a new CoralArm. */
@@ -28,7 +28,7 @@ public class CoralArm extends SubsystemBase {
   SparkMaxConfig config = new SparkMaxConfig();
   SparkClosedLoopController CoralArmPID = CoralArm.getClosedLoopController();  
   private static final RelativeEncoder CORAL_ARM_ENCODER = CoralArm.getEncoder();
-  private static final AbsoluteEncoder CORAL_ARM_ENCODER_ABSOLUTE = CoralArm.getAbsoluteEncoder();
+ // private static final AbsoluteEncoder CORAL_ARM_ENCODER_ABSOLUTE = CoralArm.getAbsoluteEncoder();
 
 
   public CoralArm() {
@@ -44,7 +44,7 @@ public class CoralArm extends SubsystemBase {
    config.closedLoop.maxMotion
     .maxVelocity(2000)
     .maxAcceleration(3000)
-    .allowedClosedLoopError(0.03);
+    .allowedClosedLoopError(0.3);
     config.closedLoop
     .pidf(0.2, 0.0, 0.05,0.001)
     .outputRange(kMinOutput, kMaxOutput)
@@ -77,12 +77,13 @@ public class CoralArm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
     SmartDashboard.putNumber("Coral Arm Position", CORAL_ARM_ENCODER.getPosition());
-    SmartDashboard.putNumber("Coral Arm Absolute Position", getAbsolutePosition());
+   // SmartDashboard.putNumber("Coral Arm Absolute Position", getAbsolutePosition());
 
   }
       ///// Absolute Encoder position  /////////////
-      public static double getAbsolutePosition() {
-        return CORAL_ARM_ENCODER_ABSOLUTE.getPosition();
-      }
+      //public static double getAbsolutePosition() {
+      //  return CORAL_ARM_ENCODER_ABSOLUTE.getPosition();
+     // }
 }

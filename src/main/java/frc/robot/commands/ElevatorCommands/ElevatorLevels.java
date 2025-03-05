@@ -14,11 +14,12 @@ public class ElevatorLevels extends Command {
   Elevator elevator;
   double wantedPosition;
 
-  /** Creates a new ElevatorLevels. */
-  public ElevatorLevels(double wantedPosition) {
+  /** Moves elevator to new level. */
+  public ElevatorLevels(Elevator elevator, double wantedPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.wantedPosition = wantedPosition;
-
+    this.elevator = elevator;
+    
     addRequirements(elevator);
   }
 
@@ -39,6 +40,6 @@ public class ElevatorLevels extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(elevator.getCurrentElevatorPosition() - wantedPosition) <= Constants.OperatorConstants.tolerance);
+    return (Math.abs(Elevator.getCurrentElevatorPosition() - wantedPosition) <= 3);
   }
 }

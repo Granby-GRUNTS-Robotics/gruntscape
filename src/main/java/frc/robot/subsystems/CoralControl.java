@@ -16,6 +16,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 
 public class CoralControl extends SubsystemBase {
@@ -68,28 +69,29 @@ public class CoralControl extends SubsystemBase {
     //CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
     //CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
     if(!IntakeBeam.get()) {
+    new WaitCommand(0.1);
     CoralControlRightPID.setReference(0, SparkMax.ControlType.kPosition);
     CoralControlLeftPID.setReference(0, SparkMax.ControlType.kPosition);
     }
     else {
       CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
       CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);  
-      CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
-      CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+      CoralControlRightPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+      CoralControlLeftPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
     }
 
   } 
 
   public void placeCoral(boolean force, double wantedPosition) {
-    if(!IntakeBeam.get() && force == true) {
+    if(!getLimitSwitch() && force == true) {
       CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
       CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);  
 
-      CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
-      CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+      CoralControlRightPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
+      CoralControlLeftPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
     }
     else {
-      
+      //
       CoralControlRightPID.setReference(0, SparkMax.ControlType.kPosition);
       CoralControlLeftPID.setReference(0, SparkMax.ControlType.kPosition);
   
@@ -99,12 +101,12 @@ public class CoralControl extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Bean Break Broken", !getLimitSwitch());
+    SmartDashboard.putBoolean("Bean Break Broken", getLimitSwitch());
   }
 
   public boolean getLimitSwitch()
   {
     //return IntakeFirstLimitSwitch.get();
-    return IntakeBeam.get();
+    return !IntakeBeam.get();
   }
 }

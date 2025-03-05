@@ -27,7 +27,7 @@ public class AutoPlaceCoralThree extends SequentialCommandGroup {
     addCommands(
          new ParallelCommandGroup(
 
-        new ElevatorLevels(Constants.OperatorConstants.LEVEL_THREE_HEIGHT),
+        new ElevatorLevels(elevator, Constants.OperatorConstants.LEVEL_THREE_HEIGHT),
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE)
       ),
         

@@ -72,7 +72,7 @@ public class AlgaeControl extends SubsystemBase {
     //AlgaeControlMotorRight.set(speed * -1);
     //AlgaeControlMotorLeft.set(speed);
 
-   algaeRightPid.setReference(amperage * -1, ControlType.kCurrent);
-    algaeLeftPid.setReference(amperage, ControlType.kCurrent);
+    algaeRightPid.setReference(amperage, ControlType.kCurrent);
+    algaeLeftPid.setReference(amperage * -1, ControlType.kCurrent);
   }
 }

@@ -26,7 +26,7 @@ public class CoralPickup extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
 
-        new ElevatorLevels(Constants.OperatorConstants.HOME_POSITION),
+        new ElevatorLevels(elevator, Constants.OperatorConstants.HOME_POSITION),
 
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_HOME)
       ),
