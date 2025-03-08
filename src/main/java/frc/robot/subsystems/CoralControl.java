@@ -18,95 +18,145 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.Constants.Coral;
 
 public class CoralControl extends SubsystemBase {
   /** Creates a new CoralControl. */
-    private final static SparkMax CoralControlLeft = new SparkMax(Constants.Coral.CORAL_DIRECTION_LEFT_MOTOR_ID, MotorType.kBrushless);
-  SparkMaxConfig config = new SparkMaxConfig();
-  SparkClosedLoopController CoralControlLeftPID = CoralControlLeft.getClosedLoopController();
 
   private final static SparkMax CoralControlRight = new SparkMax(Constants.Coral.CORAL_DIRECTION_RIGHT_MOTOR_ID, MotorType.kBrushless);
   SparkClosedLoopController CoralControlRightPID = CoralControlRight.getClosedLoopController();
+    
+  private final static SparkMax CoralControlLeft = new SparkMax(Constants.Coral.CORAL_DIRECTION_LEFT_MOTOR_ID, MotorType.kBrushless);
+  SparkClosedLoopController CoralControlLeftPID = CoralControlLeft.getClosedLoopController();
+
+
+  SparkMaxConfig coralright = new SparkMaxConfig();
+  SparkMaxConfig coralleft = new SparkMaxConfig();
+
 
   private static final RelativeEncoder CORAL_CONTROL_LEFT_ENCODER = CoralControlLeft.getEncoder();
   private static final RelativeEncoder CORAL_CONTROL_RIGHT_ENCODER = CoralControlRight.getEncoder();
-
+ 
   private static final DigitalInput IntakeBeam = new DigitalInput(9);
 
+
   public CoralControl() {
+
     double kMinOutput = -1;
     double kMaxOutput = 1;
-   config
+    coralright
     .inverted(false)
     .idleMode(IdleMode.kBrake);
-   config.encoder
+    coralright.encoder
     .positionConversionFactor(1)
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
-   config.closedLoop.maxMotion
+    coralright.closedLoop.maxMotion
     .maxVelocity(0.25)
     .maxAcceleration(1)
-    .allowedClosedLoopError(0.01);
-    config.closedLoop
+   .allowedClosedLoopError(0.01);
+    coralright.closedLoop
     .pid(0.02, 0.0, 0.0)
     .outputRange(kMinOutput, kMaxOutput);
-   //config.closedLoop
-   // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   // 
-      
-    //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
-    CoralControlLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    CoralControlRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
-    CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
-    CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);
+    // Coral Left
+    coralleft
+        .inverted(true)
+        .idleMode(IdleMode.kBrake);
+    coralleft.encoder
+        .positionConversionFactor(1)
+        .velocityConversionFactor(1);
+    // Set MAXMotion parameters
+    coralleft.closedLoop.maxMotion
+        .maxVelocity(0.25)
+        .maxAcceleration(1)
+        .allowedClosedLoopError(0.01);
+    coralleft.closedLoop
+        .pid(0.02, 0.0, 0.0)
+        .outputRange(kMinOutput, kMaxOutput);
+    
+
+    CoralControlRight.configure(coralright, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    CoralControlLeft.configure(coralleft, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
-  public void setCoralControlRotations(double wantedPosition) {
+  public void setCoralVelocity(double wantedVelocity) {
 
-    //ELEVATOR_DIRECTION_ENCODER.setPosition(pos);
-    //CoralControlRightPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
-    //CoralControlLeftPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
-    if(!IntakeBeam.get()) {
-    new WaitCommand(0.1);
-    CoralControlRightPID.setReference(0, SparkMax.ControlType.kPosition);
-    CoralControlLeftPID.setReference(0, SparkMax.ControlType.kPosition);
-    }
-    else {
-      CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
-      CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);  
-      CoralControlRightPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
-      CoralControlLeftPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
-    }
+    //if(!IntakeBeam.get()) {
 
+   // CoralControlRightPID.setReference(0, SparkMax.ControlType.kVelocity);
+   // CoralControlLeftPID.setReference(0, SparkMax.ControlType.kVelocity);
+
+    //}
+
+  //  else {
+
+     // CORAL_CONTROL_LEFT_ENCODER.setPosition(2);
+     // CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
+
+      CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
+      CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
+    //}
   } 
 
-  public void placeCoral(boolean force, double wantedPosition) {
-    if(!getLimitSwitch() && force == true) {
-      CORAL_CONTROL_LEFT_ENCODER.setPosition(0);
-      CORAL_CONTROL_RIGHT_ENCODER.setPosition(0);  
+  public void stopCoralVelocity() {
+    CoralControlRightPID.setReference(0, SparkMax.ControlType.kMAXMotionVelocityControl);
+    CoralControlLeftPID.setReference(0, SparkMax.ControlType.kMAXMotionVelocityControl);
 
-      CoralControlRightPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
-      CoralControlLeftPID.setReference(wantedPosition * -1, SparkMax.ControlType.kPosition);
+  }
+
+    public double coralWheelPosition() {
+      
+      return CORAL_CONTROL_RIGHT_ENCODER.getPosition();
+    }
+
+    public void setCoralWheelPosition(double position) {
+
+       CORAL_CONTROL_RIGHT_ENCODER.setPosition(position);
+       CORAL_CONTROL_LEFT_ENCODER.setPosition(position);
+
+    }
+
+
+ /*  public void placeCoral(boolean force) {
+    if(!getLimitSwitch() && force == true) {
+
+     // CORAL_CONTROL_LEFT_ENCODER.setPosition(2);
+      //CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
+
+      CoralControlRightPID.setReference(10, SparkMax.ControlType.kVelocity);
+      CoralControlLeftPID.setReference(10, SparkMax.ControlType.kVelocity);
     }
     else {
-      //
-      CoralControlRightPID.setReference(0, SparkMax.ControlType.kPosition);
-      CoralControlLeftPID.setReference(0, SparkMax.ControlType.kPosition);
+
+      CoralControlRightPID.setReference(0, SparkMax.ControlType.kVelocity);
+      CoralControlLeftPID.setReference(0, SparkMax.ControlType.kVelocity);
   
     }
+  } */
+
+  public void moveCoralForward(double wantedRotations) {
+
+      CoralControlRightPID.setReference(wantedRotations, SparkMax.ControlType.kPosition);
+      CoralControlLeftPID.setReference(wantedRotations, SparkMax.ControlType.kPosition);
   }
+
+  public void testCoralPosition(double wantedVelocity) {
+
+    CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
+}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Bean Break Broken", getLimitSwitch());
+    SmartDashboard.putBoolean("Bean Break Broken", touchingBeamBreak());
+    SmartDashboard.putNumber("Coral Integer Position", CORAL_CONTROL_LEFT_ENCODER.getPosition());
+    SmartDashboard.putNumber("Coral Velocity", CORAL_CONTROL_LEFT_ENCODER.getVelocity());
   }
 
-  public boolean getLimitSwitch()
+  public boolean touchingBeamBreak()
   {
-    //return IntakeFirstLimitSwitch.get();
     return !IntakeBeam.get();
   }
 }

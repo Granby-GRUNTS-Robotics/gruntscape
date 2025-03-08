@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
@@ -10,7 +6,6 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -27,40 +22,47 @@ public class AlgaeArm extends SubsystemBase {
 
   private static final RelativeEncoder ALGAE_ARM_POSITION_ENCODER = AlgaeArmRotationMotor.getEncoder();
 
+  private boolean armExtended = false; // is arm extended or not
+
   public AlgaeArm() {
     double kMinOutput = -1;
     double kMaxOutput = 1;
-   config
-    .inverted(false)
-    .idleMode(IdleMode.kBrake);
-   config.encoder
-    .positionConversionFactor(1)
-    .velocityConversionFactor(1);
+    config
+        .inverted(false)
+        .idleMode(IdleMode.kBrake);
+    config.encoder
+        .positionConversionFactor(1)
+        .velocityConversionFactor(1);
+
     // Set MAXMotion parameters
-   config.closedLoop.maxMotion
-    .maxVelocity(0.25)
-    .maxAcceleration(1)
-    .allowedClosedLoopError(0.01);
+    config.closedLoop.maxMotion
+        .maxVelocity(7000)
+        .maxAcceleration(7000)
+        .allowedClosedLoopError(0.05);
     config.closedLoop
-    .pid(0.1, 0.0, 0.0)
-    .outputRange(kMinOutput, kMaxOutput);
-   //config.closedLoop
-   // .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   // 
-      
-    //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
+        .pid(0.025, 0.0, 0.0) // original value: (0.1, 0, 0)
+        .outputRange(kMinOutput, kMaxOutput);
+
     AlgaeArmRotationMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
+    // force position to be 0 at the start
     ALGAE_ARM_POSITION_ENCODER.setPosition(0);
-
   }
 
-  public void setAlgaeRotations(double wantedRotations) {
-    algaeArmPid.setReference(wantedRotations, SparkMax.ControlType.kPosition);
-  } 
+  public void setAlgaeRotations(double wantedRotations, boolean isArmExtended) {
+    if (isArmExtended && !armExtended) {
+      
+      armExtended = true;
+      algaeArmPid.setReference(wantedRotations, SparkMax.ControlType.kMAXMotionPositionControl);
+    } 
+    
+    else if (!isArmExtended && armExtended) {
+      armExtended = false; 
+      algaeArmPid.setReference(Constants.Algae.ARM_HOME_POSITION, SparkMax.ControlType.kMAXMotionPositionControl);
+    }
+  }
 
-
-    public double getCurrentAlgaeArmRotation() {
+  public double getCurrentAlgaeArmRotation() {
     return ALGAE_ARM_POSITION_ENCODER.getPosition();
   }
 

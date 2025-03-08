@@ -5,40 +5,47 @@
 package frc.robot.commands.CoralCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.CoralArm;
+import frc.robot.subsystems.CoralControl;
+import edu.wpi.first.wpilibj.Joystick;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class CoralMoveArm extends Command {
-  /** Creates a new CoralPlace. */
+public class TestCoralControl extends Command {
+  Joystick joystick;
+  CoralControl coralControl;
 
-  CoralArm coralArm;
-  double wantedPosition;
-
-  public CoralMoveArm(CoralArm coralArm, double wantedPosition) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.coralArm = coralArm;
-
-    addRequirements(coralArm);
+  /** Creates a new TestCoralControl. */
+  public TestCoralControl(CoralControl coralControl, Joystick joystick) {
+    this.joystick = joystick;
+    this.coralControl = coralControl;
+    
+    addRequirements(coralControl);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coralArm.setCoralArmPosition(wantedPosition);
+
+    coralControl.testCoralPosition(joystick.getY() * -0.25); //Controls are inverted
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+    coralControl.testCoralPosition(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(CoralArm.getCurrentCoralArmRotation() - wantedPosition) <= 2);
+    return false;
   }
 }

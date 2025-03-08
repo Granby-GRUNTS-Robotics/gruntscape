@@ -38,11 +38,11 @@ public final class Constants {
     public static final int ELEVATOR_DIRECTION_MOTOR_ID = 50; //50;
 
     // Elevator Levels
-    public static final int HOME_POSITION = 3; // rotations's
-
-    public static final double LEVEL_ONE_HEIGHT = 35.3; // rotations's
-    public static final double LEVEL_TWO_HEIGHT = 58.2; // rotations's
-    public static final double LEVEL_THREE_HEIGHT = 106.1; // rotations's
+    public static final int HOME_POSITION = 3; // rotations
+    public static final double PICKUP_POSITION = 4.5; // rotations // coralARM: 4.1
+    public static final double LEVEL_ONE_HEIGHT = 35.3; // rotations // coralARM: 4.1
+    public static final double LEVEL_TWO_HEIGHT = 58.2; // rotations // coralARM: 4.1
+    public static final double LEVEL_THREE_HEIGHT = 106.1; // rotations // coralARM: 13
 
     public static final double tolerance = 2; // prevent jittering when reaching wanted position (elevator)
 
@@ -107,6 +107,7 @@ public final class Constants {
   public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 4;
 
   public static boolean isSlow = false;
+  public static boolean algaeArmExtended = false;
 
   public static boolean isFieldCentric = true;
 
@@ -185,7 +186,7 @@ public final class Constants {
     public static final int ARM_HOME_POSITION = 0; // rotations's
     public static final int ARM_LEVEL_ONE = 6; // rotations's
     public static final int ARM_LEVEL_TWO = 12; // rotations's
-    public static final int ARM_LEVEL_THREE = 16; // rotations's 
+    public static final int ARM_LEVEL_THREE = 15; // rotations's 
 
   }
 
@@ -196,10 +197,10 @@ public final class Constants {
 
     public static double CORAL_ARM_POSITIONS = 1;
 
-    public static double CORAL_ARM_POSITION_HOME = 3.3; //0.03
-    public static double CORAL_ARM_POSITION_ONE = 3.55; //0.05
-    public static double CORAL_ARM_POSITION_TWO = 3.55; //0.1
-    public static double CORAL_ARM_POSITION_THREE = 12.15; //0.15
+    public static double CORAL_ARM_POSITION_HOME = 4.1; //0.S03 // AKA "PICKUP"
+    public static double CORAL_ARM_POSITION_ONE = 4.1; //0.05
+    public static double CORAL_ARM_POSITION_TWO = 4.1; //0.1
+    public static double CORAL_ARM_POSITION_THREE = 13; //0.15
 
   }
   

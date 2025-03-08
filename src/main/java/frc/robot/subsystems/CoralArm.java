@@ -42,8 +42,8 @@ public class CoralArm extends SubsystemBase {
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
    config.closedLoop.maxMotion
-    .maxVelocity(2000)
-    .maxAcceleration(3000)
+    .maxVelocity(1000)
+    .maxAcceleration(1500)
     .allowedClosedLoopError(0.3);
     config.closedLoop
     .pidf(0.2, 0.0, 0.05,0.001)
@@ -56,7 +56,8 @@ public class CoralArm extends SubsystemBase {
     //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
     CoralArm.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
-    //CORAL_ARM_ENCODER.setPosition(0);
+    // when starting robot, set the position to "0"
+    CORAL_ARM_ENCODER.setPosition(0);
   }
 
   public void setCoralArmPosition(double wantedPosition) {

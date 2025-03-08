@@ -16,7 +16,8 @@ public class ElevatorWaitCommand extends Command {
   public ElevatorWaitCommand(Elevator intake, double time) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake;
-    this.intake = intake;
+    this.time = time;
+
     addRequirements(intake);
   }
 
@@ -26,7 +27,7 @@ public class ElevatorWaitCommand extends Command {
     timer = new Timer();
     timer.reset();
     timer.start();
-    intake.setElevatorPosition(Elevator.getCurrentElevatorPosition());
+    //intake.setElevatorPosition(Elevator.getCurrentElevatorPosition());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,7 +37,7 @@ public class ElevatorWaitCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setElevatorPosition(Elevator.getCurrentElevatorPosition());
+   // intake.setElevatorPosition(Elevator.getCurrentElevatorPosition());
     System.out.println("********************************* IntakeWaitCommand Complete *********************************");
   }
 
