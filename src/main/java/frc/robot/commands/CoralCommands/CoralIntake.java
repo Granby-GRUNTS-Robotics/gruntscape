@@ -17,9 +17,7 @@ import frc.robot.subsystems.Elevator;
 public class CoralIntake extends Command {
 
   CoralControl intake;
-  boolean passedLimitSwitch = false;
-  boolean force;
-  Elevator elevator;
+
 
   public CoralIntake(CoralControl intake) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,28 +30,31 @@ public class CoralIntake extends Command {
   @Override
   public void initialize() {
 
-    intake.setCoralVelocity(10);
+   // intake.setCoralVelocity(0.5);
    
-   // intake.setCoralWheelPosition(0);
+    intake.setCoralWheelPosition(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   // if(!passedLimitSwitch) {
+    // Phase 2
+   if(intake.FirstBeamBroken() && intake.SecondBeamBroken()) {
       
-    //  intake.setCoralVelocity(10);
+      intake.setCoralVelocity(0.05);
 
-    //}
-   /*  else if (intake.touchingBeamBreak() && force == true) {
-      intake.setCoralVelocity(30);
+    }
+    // Phase 3
+     else if (!intake.FirstBeamBroken() && intake.SecondBeamBroken()) {
+      intake.setCoralVelocity(0);
       
-     }*/
-    /* else {
+     }
+     // Phase 1
+     else {
 
-      intake.moveCoralForward(10);
+      intake.setCoralVelocity(1);
 
-    }*/
+    }
 
   }
 
@@ -62,9 +63,7 @@ public class CoralIntake extends Command {
   public void end(boolean interrupted) {
 
 
-    intake.setCoralVelocity(0);
- //  intake.setCoralWheelPosition(0);
-   // intake.moveCoralForward(2);
+    intake.setCoralVelocity(0.0);
   }
 
   // Returns true when the command should end.
@@ -72,7 +71,7 @@ public class CoralIntake extends Command {
   @Override
   public boolean isFinished() {
 
-    return intake.touchingBeamBreak();
+    return !intake.FirstBeamBroken() && intake.SecondBeamBroken();
     // if beam break not hit yet, continue moving forward
     /*if(!passedLimitSwitch && !intake.touchingBeamBreak()) {
       return true;

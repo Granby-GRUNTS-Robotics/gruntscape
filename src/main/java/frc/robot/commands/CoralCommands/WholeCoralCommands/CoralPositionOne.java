@@ -27,7 +27,6 @@ public class CoralPositionOne extends SequentialCommandGroup {
          
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_ONE)
       
-       // new SpinUpFeederDutyCycle(shooter, Constants.FeederConstants.feederSpeedDutyCycle, true)  
       )
     );
   }

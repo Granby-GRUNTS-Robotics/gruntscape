@@ -10,23 +10,26 @@ import frc.robot.subsystems.Elevator;
 
 public class ElevatorWaitCommand extends Command {
   /** Creates a new IntakeWaitCommand. */
-  Elevator intake;
+  Elevator elevator;
   double time;
   Timer timer;
-  public ElevatorWaitCommand(Elevator intake, double time) {
+  public ElevatorWaitCommand(Elevator elevator, double time) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.intake = intake;
+    this.elevator = elevator;
     this.time = time;
 
-    addRequirements(intake);
+    addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("********************************* Start Init *********************************");
     timer = new Timer();
     timer.reset();
     timer.start();
+    Elevator.getCurrentElevatorPosition();
+    System.out.println("********************************* Init Complete *********************************");
     //intake.setElevatorPosition(Elevator.getCurrentElevatorPosition());
   }
 
@@ -37,13 +40,15 @@ public class ElevatorWaitCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-   // intake.setElevatorPosition(Elevator.getCurrentElevatorPosition());
-    System.out.println("********************************* IntakeWaitCommand Complete *********************************");
+    System.out.println("********************************* elevatorWaitCommand end Started *********************************");
+    Elevator.getCurrentElevatorPosition();
+    System.out.println("********************************* elevatorWaitCommand end Complete *********************************");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    System.out.println("********************************* in isFinish Complete *********************************");
     return timer.get() > time;
   }
 }

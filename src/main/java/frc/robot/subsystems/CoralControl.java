@@ -36,8 +36,10 @@ public class CoralControl extends SubsystemBase {
 
   private static final RelativeEncoder CORAL_CONTROL_LEFT_ENCODER = CoralControlLeft.getEncoder();
   private static final RelativeEncoder CORAL_CONTROL_RIGHT_ENCODER = CoralControlRight.getEncoder();
- 
-  private static final DigitalInput IntakeBeam = new DigitalInput(9);
+  
+   static final DigitalInput FirstBeam = new DigitalInput(2);
+
+  private static final DigitalInput SecondBeam = new DigitalInput(9);
 
 
   public CoralControl() {
@@ -54,10 +56,10 @@ public class CoralControl extends SubsystemBase {
     coralright.closedLoop.maxMotion
     .maxVelocity(0.25)
     .maxAcceleration(1)
-   .allowedClosedLoopError(0.01);
-    coralright.closedLoop
-    .pid(0.02, 0.0, 0.0)
-    .outputRange(kMinOutput, kMaxOutput);
+    .allowedClosedLoopError(0.01);
+   // coralright.closedLoop
+   // .pid(0.02, 0.0, 0.0)
+   // .outputRange(kMinOutput, kMaxOutput);
 
     // Coral Left
     coralleft
@@ -67,10 +69,10 @@ public class CoralControl extends SubsystemBase {
         .positionConversionFactor(1)
         .velocityConversionFactor(1);
     // Set MAXMotion parameters
-    coralleft.closedLoop.maxMotion
-        .maxVelocity(0.25)
-        .maxAcceleration(1)
-        .allowedClosedLoopError(0.01);
+   // coralleft.closedLoop.maxMotion
+    //    .maxVelocity(0.25)
+    //    .maxAcceleration(1)
+     //   .allowedClosedLoopError(0.01);
     coralleft.closedLoop
         .pid(0.02, 0.0, 0.0)
         .outputRange(kMinOutput, kMaxOutput);
@@ -95,20 +97,23 @@ public class CoralControl extends SubsystemBase {
      // CORAL_CONTROL_LEFT_ENCODER.setPosition(2);
      // CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
 
+     // CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
+     // CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
+
       CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
       CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
     //}
   } 
 
-  public void stopCoralVelocity() {
+  /*public void stopCoralVelocity() {
     CoralControlRightPID.setReference(0, SparkMax.ControlType.kMAXMotionVelocityControl);
     CoralControlLeftPID.setReference(0, SparkMax.ControlType.kMAXMotionVelocityControl);
 
-  }
+  }*/
 
     public double coralWheelPosition() {
       
-      return CORAL_CONTROL_RIGHT_ENCODER.getPosition();
+      return CORAL_CONTROL_LEFT_ENCODER.getPosition();
     }
 
     public void setCoralWheelPosition(double position) {
@@ -119,22 +124,20 @@ public class CoralControl extends SubsystemBase {
     }
 
 
- /*  public void placeCoral(boolean force) {
-    if(!getLimitSwitch() && force == true) {
+   public void placeCoral() {
+    if(SecondBeamBroken() || FirstBeamBroken()) {
 
      // CORAL_CONTROL_LEFT_ENCODER.setPosition(2);
       //CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
 
-      CoralControlRightPID.setReference(10, SparkMax.ControlType.kVelocity);
-      CoralControlLeftPID.setReference(10, SparkMax.ControlType.kVelocity);
+      setCoralVelocity(0.5);
     }
     else {
 
-      CoralControlRightPID.setReference(0, SparkMax.ControlType.kVelocity);
-      CoralControlLeftPID.setReference(0, SparkMax.ControlType.kVelocity);
+      setCoralVelocity(0);
   
     }
-  } */
+  } 
 
   public void moveCoralForward(double wantedRotations) {
 
@@ -150,13 +153,18 @@ public class CoralControl extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Bean Break Broken", touchingBeamBreak());
+    SmartDashboard.putBoolean("1st Beam Broken", FirstBeamBroken());
+    SmartDashboard.putBoolean("2nd Beam Broken", SecondBeamBroken());
     SmartDashboard.putNumber("Coral Integer Position", CORAL_CONTROL_LEFT_ENCODER.getPosition());
     SmartDashboard.putNumber("Coral Velocity", CORAL_CONTROL_LEFT_ENCODER.getVelocity());
   }
 
-  public boolean touchingBeamBreak()
+  public boolean FirstBeamBroken()
   {
-    return !IntakeBeam.get();
+    return !FirstBeam.get();
+  }
+  public boolean SecondBeamBroken()
+  {
+    return !SecondBeam.get();
   }
 }

@@ -41,12 +41,12 @@ public class CoralArm extends SubsystemBase {
     .positionConversionFactor(1)
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
-   config.closedLoop.maxMotion
-    .maxVelocity(1000)
-    .maxAcceleration(1500)
+    config.closedLoop.maxMotion
+    .maxVelocity(100)
+    .maxAcceleration(500)
     .allowedClosedLoopError(0.3);
     config.closedLoop
-    .pidf(0.2, 0.0, 0.05,0.001)
+   .pidf(0.2, 0.0, 0.05,0.001)
     .outputRange(kMinOutput, kMaxOutput)
     //.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
    //config.closedLoop
@@ -61,7 +61,7 @@ public class CoralArm extends SubsystemBase {
   }
 
   public void setCoralArmPosition(double wantedPosition) {
-    CoralArmPID.setReference(wantedPosition, SparkMax.ControlType.kMAXMotionPositionControl);
+    CoralArmPID.setReference(wantedPosition, SparkMax.ControlType.kPosition);
   } 
 
 
@@ -80,7 +80,7 @@ public class CoralArm extends SubsystemBase {
     // This method will be called once per scheduler run
 
     SmartDashboard.putNumber("Coral Arm Position", CORAL_ARM_ENCODER.getPosition());
-   // SmartDashboard.putNumber("Coral Arm Absolute Position", getAbsolutePosition());
+    //SmartDashboard.putNumber("Coral Arm Absolute Position", getAbsolutePosition());
 
   }
       ///// Absolute Encoder position  /////////////

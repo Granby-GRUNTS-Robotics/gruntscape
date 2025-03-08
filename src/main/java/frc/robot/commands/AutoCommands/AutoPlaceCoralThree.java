@@ -10,22 +10,22 @@ import frc.robot.Constants;
 import frc.robot.commands.ElevatorWaitCommand;
 import frc.robot.commands.CoralCommands.CoralIntake;
 import frc.robot.commands.CoralCommands.CoralMoveArm;
-import frc.robot.commands.ElevatorCommands.ElevatorLevels;
 import frc.robot.subsystems.CoralArm;
 import frc.robot.subsystems.CoralControl;
 import frc.robot.subsystems.Elevator;
+import frc.robot.commands.ElevatorCommands.ElevatorLevels;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
 public class AutoPlaceCoralThree extends SequentialCommandGroup {
-  /** Creates a new ElevatorLevelTwoAuto. */
+  /** Creates a new ElevatorLevelThreeAuto. */
   public AutoPlaceCoralThree(Elevator elevator, CoralArm coralArm, CoralControl coralControl) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-         new ParallelCommandGroup(
+      new ParallelCommandGroup(
 
         new ElevatorLevels(elevator, Constants.OperatorConstants.LEVEL_THREE_HEIGHT),
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE)
@@ -34,7 +34,6 @@ public class AutoPlaceCoralThree extends SequentialCommandGroup {
         new ElevatorWaitCommand(elevator, 0.25),
 
         new CoralIntake(coralControl)
-
     );
   }
 }

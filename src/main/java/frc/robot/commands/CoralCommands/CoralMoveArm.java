@@ -18,6 +18,7 @@ public class CoralMoveArm extends Command {
   public CoralMoveArm(CoralArm coralArm, double wantedPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.coralArm = coralArm;
+    this.wantedPosition = wantedPosition;
 
     addRequirements(coralArm);
   }
@@ -39,6 +40,6 @@ public class CoralMoveArm extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(CoralArm.getCurrentCoralArmRotation() - wantedPosition) <= 2);
+    return (Math.abs(CoralArm.getCurrentCoralArmRotation() - wantedPosition) <= 0.);
   }
 }

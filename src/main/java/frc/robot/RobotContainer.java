@@ -229,7 +229,8 @@ public class RobotContainer {
     xboxController.povRight().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_TWO, true), algaeArm));
     xboxController.povRight().toggleOnFalse(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_TWO, false), algaeArm));
 
-    xboxController.a().whileTrue(new RunCommand(() -> coralControl.testCoralPosition(10), coralControl));
+    xboxController.a().whileTrue(new RunCommand(() -> coralControl.placeCoral(), coralControl));
+    xboxController.a().whileFalse(new RunCommand(() -> coralControl.placeCoral(), coralControl));
 
 
     /*
@@ -248,9 +249,11 @@ public class RobotContainer {
 
     // Whole arm commands
     CoralArmHome.toggleOnTrue(new CoralPickup(elevator, coralArm, coralControl));
+    
+   // CoralArmPosOne.toggleOnTrue(new RunCommand(() -> coralArm.setCoralArmPosition(Constants.Coral.CORAL_ARM_POSITION_ONE), coralArm));
     CoralArmPosOne.toggleOnTrue(new CoralPositionOne(elevator, coralArm));
     CoralArmPosTwo.toggleOnTrue(new CoralPositionTwo(elevator, coralArm));
-    CoralArmPosThree.toggleOnTrue(new CoralPositionThree(elevator, coralArm));
+    CoralArmPosThree.toggleOnTrue(new CoralPositionThree(elevator, coralArm, coralControl));
 
     MoveCoralArm.whileTrue(new JoyCoralArm(coralArm, BUTTON_JOYSTICK));
     
