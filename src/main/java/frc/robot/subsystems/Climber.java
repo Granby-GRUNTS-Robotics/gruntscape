@@ -14,7 +14,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,42 +24,27 @@ private static final SparkMax LEAD_HOOK_MOTOR = new SparkMax(Constants.OperatorC
 private static final SparkMax FOLLOW_HOOK_MOTOR = new SparkMax(Constants.OperatorConstants.SECOND_HOOK_MOTOR_ID,MotorType.kBrushless);
 
 private static final SparkClosedLoopController LEAD_HOOK_PID = LEAD_HOOK_MOTOR.getClosedLoopController();
-private static final SparkClosedLoopController FOLLOW_HOOK_PID = FOLLOW_HOOK_MOTOR.getClosedLoopController();
-SparkMaxConfig FollowerConfig = new SparkMaxConfig();
 
 SparkMaxConfig config = new SparkMaxConfig();
-//private RelativeEncoder m_encoder;
+
+SparkMaxConfig FollowerConfig = new SparkMaxConfig();
+
 
 
 
   public Climber() {
     
-    double kMinOutput = -1;
-    double kMaxOutput = 1;
-   config
-    .inverted(false)
-    .idleMode(IdleMode.kBrake);
-    
-   config.encoder
-    .positionConversionFactor(1)
-    .velocityConversionFactor(1);
-    
-    // Set MAXMotion parameters
-   config.closedLoop.maxMotion
-    .maxVelocity(0.25)
-    .maxAcceleration(1)
-    .allowedClosedLoopError(0.01);
-    
-    config.closedLoop
-    .pid(0.1, 0.0, 0.0)
-    .outputRange(kMinOutput, kMaxOutput);
 
+   config
+    .inverted(true)
+    .idleMode(IdleMode.kBrake);
+      
     // FOLLOWER MOTOR
     FollowerConfig
     .apply(config)
     .follow(LEAD_HOOK_MOTOR);
 
-  
+
     LEAD_HOOK_MOTOR.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     FOLLOW_HOOK_MOTOR.configure(FollowerConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
   
@@ -69,7 +53,9 @@ SparkMaxConfig config = new SparkMaxConfig();
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-   // SmartDashboard.putNumber("Hook Position", m_encoder.getPosition());
+    //SmartDashboard.putNumber("Hook Position", m_encoder.getPosition());
+
+   // SmartDashboard.putNumber("Hook Speed", m_encoder.getVelocity());
   }
 
   public void setClimberSpeed(double percent)
@@ -87,4 +73,5 @@ SparkMaxConfig config = new SparkMaxConfig();
     else{LEAD_HOOK_PID.setReference(0, SparkMax.ControlType.kDutyCycle);}
 
    }
+
 }

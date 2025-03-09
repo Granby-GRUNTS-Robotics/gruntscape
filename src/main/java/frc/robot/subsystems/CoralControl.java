@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -21,6 +23,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.Coral;
 
 public class CoralControl extends SubsystemBase {
+  
   /** Creates a new CoralControl. */
 
   private final static SparkMax CoralControlRight = new SparkMax(Constants.Coral.CORAL_DIRECTION_RIGHT_MOTOR_ID, MotorType.kBrushless);
@@ -40,7 +43,8 @@ public class CoralControl extends SubsystemBase {
    static final DigitalInput FirstBeam = new DigitalInput(2);
 
   private static final DigitalInput SecondBeam = new DigitalInput(9);
-
+  
+  public boolean passedLimitSwitch;
 
   public CoralControl() {
 
@@ -52,11 +56,12 @@ public class CoralControl extends SubsystemBase {
     coralright.encoder
     .positionConversionFactor(1)
     .velocityConversionFactor(1);
+  
     // Set MAXMotion parameters
-    coralright.closedLoop.maxMotion
-    .maxVelocity(0.25)
-    .maxAcceleration(1)
-    .allowedClosedLoopError(0.01);
+   // coralright.closedLoop.maxMotion
+   // .maxVelocity(0.25)
+   // .maxAcceleration(1)
+   // .allowedClosedLoopError(0.01);
    // coralright.closedLoop
    // .pid(0.02, 0.0, 0.0)
    // .outputRange(kMinOutput, kMaxOutput);
@@ -68,41 +73,29 @@ public class CoralControl extends SubsystemBase {
     coralleft.encoder
         .positionConversionFactor(1)
         .velocityConversionFactor(1);
-    // Set MAXMotion parameters
+
+      // Set MAXMotion parameters
    // coralleft.closedLoop.maxMotion
     //    .maxVelocity(0.25)
     //    .maxAcceleration(1)
-     //   .allowedClosedLoopError(0.01);
-    coralleft.closedLoop
-        .pid(0.02, 0.0, 0.0)
-        .outputRange(kMinOutput, kMaxOutput);
+    //   .allowedClosedLoopError(0.01);
+   // coralleft.closedLoop
+    //   .pid(0.02, 0.0, 0.0)
+    //    .outputRange(kMinOutput, kMaxOutput);
     
 
     CoralControlRight.configure(coralright, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     CoralControlLeft.configure(coralleft, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
+    passedLimitSwitch = false;
   }
 
   public void setCoralVelocity(double wantedVelocity) {
 
-    //if(!IntakeBeam.get()) {
+    CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
 
-   // CoralControlRightPID.setReference(0, SparkMax.ControlType.kVelocity);
-   // CoralControlLeftPID.setReference(0, SparkMax.ControlType.kVelocity);
+    CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
 
-    //}
-
-  //  else {
-
-     // CORAL_CONTROL_LEFT_ENCODER.setPosition(2);
-     // CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
-
-     // CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
-     // CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
-
-      CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
-      CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
-    //}
   } 
 
   /*public void stopCoralVelocity() {
@@ -110,6 +103,8 @@ public class CoralControl extends SubsystemBase {
     CoralControlLeftPID.setReference(0, SparkMax.ControlType.kMAXMotionVelocityControl);
 
   }*/
+
+
 
     public double coralWheelPosition() {
       
@@ -131,10 +126,12 @@ public class CoralControl extends SubsystemBase {
       //CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
 
       setCoralVelocity(0.5);
+      passedLimitSwitch = true;
     }
     else {
 
       setCoralVelocity(0);
+      passedLimitSwitch = false;
   
     }
   } 
@@ -146,6 +143,7 @@ public class CoralControl extends SubsystemBase {
   }
 
   public void testCoralPosition(double wantedVelocity) {
+    CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
 
     CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
 }
@@ -157,6 +155,10 @@ public class CoralControl extends SubsystemBase {
     SmartDashboard.putBoolean("2nd Beam Broken", SecondBeamBroken());
     SmartDashboard.putNumber("Coral Integer Position", CORAL_CONTROL_LEFT_ENCODER.getPosition());
     SmartDashboard.putNumber("Coral Velocity", CORAL_CONTROL_LEFT_ENCODER.getVelocity());
+  }
+
+  public boolean CoralPassed() {
+    return passedLimitSwitch;
   }
 
   public boolean FirstBeamBroken()

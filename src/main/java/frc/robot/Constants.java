@@ -38,7 +38,7 @@ public final class Constants {
     public static final int ELEVATOR_DIRECTION_MOTOR_ID = 50; //50;
 
     // Elevator Levels
-    public static final double HOME_POSITION = 4.5; // rotations
+    public static final double HOME_POSITION = 4.5; // rotations: 1 time stuck IF STUCK
     public static final double PICKUP_POSITION = 4.5; // rotations // coralARM: 4.1
     public static final double LEVEL_ONE_HEIGHT = 41.8; // rotations // coralARM: 4.1
     public static final double LEVEL_TWO_HEIGHT = 65; // rotations // coralARM: 4.1
@@ -137,8 +137,8 @@ public final class Constants {
   }
 
   public static class BrakeConstants {
-    public static double BRAKE_ON = 165;   
-    public static double BRAKE_OFF = 109;
+    public static double BRAKE_ON = 175;   
+    public static double BRAKE_OFF = 120;
    }
 
    

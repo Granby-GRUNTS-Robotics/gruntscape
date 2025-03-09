@@ -6,6 +6,7 @@ package frc.robot.commands.CoralCommands.WholeCoralCommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.commands.CoralCommands.BackupCoralThree;
 import frc.robot.commands.CoralCommands.CoralMoveArm;
@@ -30,7 +31,17 @@ public class CoralPositionThree extends SequentialCommandGroup {
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE),
       
         new BackupCoralThree(coralControl)
-      )
+
+      ),
+
+         new WaitUntilCommand(() -> coralControl.CoralPassed()),
+
+        new ParallelCommandGroup(
+          new ElevatorLevels(elevator, Constants.OperatorConstants.HOME_POSITION),
+          new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_HOME)
+        )
+  
+  
     );
   }
 }

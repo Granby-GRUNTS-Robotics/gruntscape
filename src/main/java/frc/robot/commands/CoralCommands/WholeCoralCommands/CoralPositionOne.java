@@ -6,18 +6,20 @@ package frc.robot.commands.CoralCommands.WholeCoralCommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.commands.CoralCommands.CoralMoveArm;
 import frc.robot.commands.ElevatorCommands.ElevatorLevels;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.CoralArm;
+import frc.robot.subsystems.CoralControl;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CoralPositionOne extends SequentialCommandGroup {
   /** Creates a new CoralPositionOne. */
-  public CoralPositionOne(Elevator elevator, CoralArm coralArm) {
+  public CoralPositionOne(Elevator elevator, CoralArm coralArm, CoralControl coralControl) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -27,7 +29,12 @@ public class CoralPositionOne extends SequentialCommandGroup {
          
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_ONE)
       
-      )
-    );
+      ),
+      new WaitUntilCommand(() -> coralControl.CoralPassed()),
+
+      new ParallelCommandGroup(
+        new ElevatorLevels(elevator, Constants.OperatorConstants.HOME_POSITION),
+        new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_HOME)
+      )    );
   }
 }

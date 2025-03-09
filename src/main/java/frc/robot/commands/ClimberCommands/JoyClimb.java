@@ -6,23 +6,32 @@ package frc.robot.commands.ClimberCommands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.Climber;
 
 public class JoyClimb extends Command {
   /** Creates a new JoyClimb. */
-  Climber  climber;
+  Climber climber;
   Joystick joystick;
-  
-  public JoyClimb(Climber climber, Joystick joystick) {
+  AlgaeArm algaeArm;
+
+  public JoyClimb(Climber climber, AlgaeArm algaeArm, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = climber;
     this.joystick = joystick;
+    this.algaeArm = algaeArm;
+
     addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+      algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE);
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

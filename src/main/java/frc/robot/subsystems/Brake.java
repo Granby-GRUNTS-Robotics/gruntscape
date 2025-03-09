@@ -14,7 +14,7 @@ import frc.robot.Constants.BrakeConstants;
 
 public class Brake extends SubsystemBase {
   /** Creates a new Hand. */
-  public static final Servo BRAKE_SERVOS = new Servo(0);
+  public static final Servo BRAKE_SERVOS = new Servo(3);
   //private static final Servo BRAKE_SERVO_RIGHT = RobotMap.BRAKE_SERVOS_RIGHT;
   //private static final Servo BRAKE_SERVO_LEFT = RobotMap.BRAKE_SERVOS_LEFT;
 
@@ -22,10 +22,19 @@ public class Brake extends SubsystemBase {
     setBrakePosition(Constants.BrakeConstants.BRAKE_ON);
   }
 
+  public void DisableBrake() {
+    setBrakePosition(Constants.BrakeConstants.BRAKE_OFF);
+  }
+
+  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Brake Angle", getBrakeAngle());
+
+    //double brakeAngle = getBrakeAngle();
+    //System.out.println("**************************" + brakeAngle + "**************************");
 
     if (DriverStation.getMatchTime() < .1  && DriverStation.getMatchTime() >= 0 )
     {
@@ -48,5 +57,6 @@ public class Brake extends SubsystemBase {
     return BRAKE_SERVOS.getAngle();
 
   }
+
 
 }

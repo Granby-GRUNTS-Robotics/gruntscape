@@ -24,7 +24,7 @@ import frc.robot.Constants;
 public class CoralArm extends SubsystemBase {
   /** Creates a new CoralArm. */
 
-   private final static SparkMax CoralArm = new SparkMax(Constants.Coral.CORAL_ARM_MOTOR_ID, MotorType.kBrushless);
+  private final static SparkMax CoralArm = new SparkMax(Constants.Coral.CORAL_ARM_MOTOR_ID, MotorType.kBrushless);
   SparkMaxConfig config = new SparkMaxConfig();
   SparkClosedLoopController CoralArmPID = CoralArm.getClosedLoopController();  
   private static final RelativeEncoder CORAL_ARM_ENCODER = CoralArm.getEncoder();
@@ -51,9 +51,8 @@ public class CoralArm extends SubsystemBase {
     //.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
    //config.closedLoop
    .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
-   // 
+   
       
-    //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
     CoralArm.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
     // when starting robot, set the position to "0"
@@ -66,7 +65,6 @@ public class CoralArm extends SubsystemBase {
 
 
     public static double getCurrentCoralArmRotation() {
-   // return CORAL_ARM_ENCODER_ABSOLUTE.getPosition();
       return CORAL_ARM_ENCODER.getPosition();
 
   }
@@ -77,7 +75,6 @@ public class CoralArm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
 
     SmartDashboard.putNumber("Coral Arm Position", CORAL_ARM_ENCODER.getPosition());
     //SmartDashboard.putNumber("Coral Arm Absolute Position", getAbsolutePosition());

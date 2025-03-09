@@ -22,7 +22,6 @@ public class AlgaeArm extends SubsystemBase {
 
   private static final RelativeEncoder ALGAE_ARM_POSITION_ENCODER = AlgaeArmRotationMotor.getEncoder();
 
-  private boolean armExtended = false; // is arm extended or not
 
   public AlgaeArm() {
     double kMinOutput = -1;
@@ -49,19 +48,10 @@ public class AlgaeArm extends SubsystemBase {
     ALGAE_ARM_POSITION_ENCODER.setPosition(0);
   }
 
-  public void setAlgaeRotations(double wantedRotations, boolean isArmExtended) {
-    if (isArmExtended && !armExtended) {
-      
-      armExtended = true;
+  public void setAlgaeRotations(double wantedRotations) {
       algaeArmPid.setReference(wantedRotations, SparkMax.ControlType.kMAXMotionPositionControl);
-    } 
-    
-    else if (!isArmExtended && armExtended) {
-      armExtended = false; 
-      algaeArmPid.setReference(Constants.Algae.ARM_HOME_POSITION, SparkMax.ControlType.kMAXMotionPositionControl);
     }
-  }
-
+    
   public double getCurrentAlgaeArmRotation() {
     return ALGAE_ARM_POSITION_ENCODER.getPosition();
   }

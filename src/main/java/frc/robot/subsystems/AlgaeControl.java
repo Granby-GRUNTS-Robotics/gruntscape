@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -12,8 +11,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -28,10 +25,6 @@ public class AlgaeControl extends SubsystemBase {
   SparkMaxConfig config = new SparkMaxConfig();
   SparkClosedLoopController algaeRightPid = AlgaeControlMotorRight.getClosedLoopController();
   SparkClosedLoopController algaeLeftPid = AlgaeControlMotorLeft.getClosedLoopController();
-
-
-  private static double intakeSpeedAlgae;
-  private static double placementSpeedAlgae;
 
 
  // private static final PIDController RIGHT_ALGAE_CONTROLLER = AlgaePIDController;

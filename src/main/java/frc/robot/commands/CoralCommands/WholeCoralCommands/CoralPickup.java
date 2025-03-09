@@ -7,7 +7,6 @@ package frc.robot.commands.CoralCommands.WholeCoralCommands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.Constants.Coral;
 import frc.robot.commands.CoralCommands.CoralIntake;
 import frc.robot.commands.CoralCommands.CoralMoveArm;
 import frc.robot.commands.ElevatorCommands.ElevatorLevels;
@@ -28,9 +27,11 @@ public class CoralPickup extends SequentialCommandGroup {
 
         new ElevatorLevels(elevator, Constants.OperatorConstants.HOME_POSITION),
 
-        new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_HOME)
-      ),
+        new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_HOME),
+        
         new CoralIntake(coralControl)
+
+      )
     );
   }
 }

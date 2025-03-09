@@ -33,6 +33,7 @@ public class CoralIntake extends Command {
    // intake.setCoralVelocity(0.5);
    
     intake.setCoralWheelPosition(0);
+    intake.setCoralVelocity(0.05);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
