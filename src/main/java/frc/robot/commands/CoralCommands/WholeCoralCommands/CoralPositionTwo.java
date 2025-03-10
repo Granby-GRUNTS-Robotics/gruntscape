@@ -35,8 +35,7 @@ public class CoralPositionTwo extends SequentialCommandGroup {
       new WaitUntilCommand(() -> coralControl.CoralPassed()),
 
       new ParallelCommandGroup(
-        new ElevatorLevels(elevator, Constants.OperatorConstants.HOME_POSITION),
-        new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_HOME)
+        new CoralPickup(elevator, coralArm, coralControl)
       )
 
     );

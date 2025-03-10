@@ -162,7 +162,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
                 
-              ///////////////// NEW INPUT: ZERO GYRO \\\\\\\\\\\\\\\\\
+              ///////////////// ZERO GYRO \\\\\\\\\\\\\\\\\
 
     xboxController.start().whileTrue(new InstantCommand(() -> swerveSubsystem.zeroGyro())); // 
     xboxController.start().whileTrue(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 1)));
@@ -188,7 +188,7 @@ public class RobotContainer {
     xboxController.leftStick().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.outtakeCurrentAlgaeControl), algaeControl)); // OUTTAKE
     xboxController.leftStick().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0))); // OUTTAKE
 
-              ///////////////// NEW INPUT: SLOW MODE TOGGLE \\\\\\\\\\\\\\\\\
+              ///////////////// SLOW MODE TOGGLE \\\\\\\\\\\\\\\\\
 
     xboxController.button(7).toggleOnTrue(new InstantCommand(() -> swerveSubsystem.slowModeToggle()));
     xboxController.button(7).whileTrue(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 1)));
