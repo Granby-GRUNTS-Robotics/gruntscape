@@ -29,10 +29,10 @@ public class CoralPositionOne extends SequentialCommandGroup {
          
         new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_ONE)
       
-      ),
-      new WaitUntilCommand(() -> coralControl.CoralPassed()),
+      )
+     // new WaitUntilCommand(() -> coralControl.CoralPassed()),
 
-        new CoralPickup(elevator, coralArm, coralControl)
+        //new CoralPickup(elevator, coralArm, coralControl)
       );
   }
 }

@@ -85,7 +85,7 @@ public class SwerveJoystickCmd extends Command {
     if (Math.abs(xSpeed) + Math.abs(ySpeed) > .01 )
     directionSpeed = (directionSpeed * 2 - swerveSubsystem.getZSpeed());
 
-    if (Constants.isSlow || Elevator.getCurrentElevatorPosition() > Constants.OperatorConstants.LEVEL_TWO_HEIGHT)
+    if (Constants.isSlow || Elevator.getCurrentElevatorPosition() >= Constants.OperatorConstants.LEVEL_TWO_HEIGHT)
     {
       xSpeed /= 2.5;
       ySpeed /= 2.5;
@@ -105,8 +105,8 @@ public class SwerveJoystickCmd extends Command {
 
     ChassisSpeeds chassisSpeeds;
 
-    SmartDashboard.putBoolean("Field Centric if true", Constants.isFieldCentric);
-     SmartDashboard.putBoolean("Slow Mode if true", Constants.isSlow);
+    SmartDashboard.putBoolean("Field Centric Enabled", Constants.isFieldCentric);
+     SmartDashboard.putBoolean("Slow Mode Enabled", Constants.isSlow);
 
     if (Constants.isFieldCentric)
     {

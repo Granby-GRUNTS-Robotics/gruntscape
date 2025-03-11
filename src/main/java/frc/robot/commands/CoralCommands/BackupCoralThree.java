@@ -22,17 +22,17 @@ public class BackupCoralThree extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (!coralControl.FirstBeamBroken() && coralControl.SecondBeamBroken()) {
+    if (!coralControl.FirstBeamBroken() && coralControl.SecondBeamBroken()) { // FIRST BEAM NOT BROKEN AND SECOND BROKEN
       coralControl.setCoralVelocity(-0.4);
     }
-    else if (coralControl.FirstBeamBroken() && coralControl.SecondBeamBroken()) {
-      coralControl.setCoralVelocity(-0.1);
+    else if (coralControl.FirstBeamBroken() && coralControl.SecondBeamBroken()) {  // FIRST BEAM BROKEN AND SECOND BROKEN
+      coralControl.setCoralVelocity(-0.2);
     }
-    else if (coralControl.FirstBeamBroken() && !coralControl.SecondBeamBroken()) {
+    else if (coralControl.FirstBeamBroken() && !coralControl.SecondBeamBroken()) { // FIRST BEAM BROKEN AND SECOND NOT BROKEN
       coralControl.setCoralVelocity(0);
     }
     else {
-      coralControl.setCoralVelocity(0.3);
+      coralControl.setCoralVelocity(0.1);
     }
 
   }

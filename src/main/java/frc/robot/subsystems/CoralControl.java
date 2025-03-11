@@ -44,7 +44,6 @@ public class CoralControl extends SubsystemBase {
 
   private static final DigitalInput SecondBeam = new DigitalInput(9);
   
-  public boolean passedLimitSwitch;
 
   public CoralControl() {
 
@@ -87,7 +86,6 @@ public class CoralControl extends SubsystemBase {
     CoralControlRight.configure(coralright, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     CoralControlLeft.configure(coralleft, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
-    passedLimitSwitch = false;
   }
 
   public void setCoralVelocity(double wantedVelocity) {
@@ -126,12 +124,11 @@ public class CoralControl extends SubsystemBase {
       //CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
 
       setCoralVelocity(0.5);
-      passedLimitSwitch = true;
+
     }
     else {
 
       setCoralVelocity(0);
-      passedLimitSwitch = false;
   
     }
   } 
@@ -157,9 +154,6 @@ public class CoralControl extends SubsystemBase {
     SmartDashboard.putNumber("Coral Velocity", CORAL_CONTROL_LEFT_ENCODER.getVelocity());
   }
 
-  public boolean CoralPassed() {
-    return passedLimitSwitch;
-  }
 
   public boolean FirstBeamBroken()
   {

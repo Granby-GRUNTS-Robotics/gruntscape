@@ -28,20 +28,17 @@ public class CoralPositionThree extends SequentialCommandGroup {
         
         new ElevatorLevels(elevator, Constants.OperatorConstants.LEVEL_THREE_HEIGHT),
         
-        new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE),
       
+      new ParallelCommandGroup(
+
+        new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE),
+        
         new BackupCoralThree(coralControl)
 
-      ),
+      )    
+      )
 
-         new WaitUntilCommand(() -> coralControl.CoralPassed()),
-
-        new ParallelCommandGroup(
-          new ElevatorLevels(elevator, Constants.OperatorConstants.HOME_POSITION),
-          new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_HOME)
-        )
-  
-  
+      
     );
   }
 }

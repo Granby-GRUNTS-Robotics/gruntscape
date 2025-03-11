@@ -200,7 +200,7 @@ public final class Constants {
     public static double CORAL_ARM_POSITION_HOME = 3.3; //0.S03 // AKA "PICKUP"
     public static double CORAL_ARM_POSITION_ONE = 4.1; //0.05
     public static double CORAL_ARM_POSITION_TWO = 4.1; //0.1
-    public static double CORAL_ARM_POSITION_THREE = 11.5; // usually **13**
+    public static double CORAL_ARM_POSITION_THREE = 12.5; // usually **13**
 
   }
   

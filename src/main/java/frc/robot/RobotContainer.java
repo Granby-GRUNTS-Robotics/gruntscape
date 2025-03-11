@@ -53,6 +53,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
+
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
  // public static final LimeLight limeLight3  = new LimeLight(Constants.Limelight.limelightName3);
@@ -113,6 +114,9 @@ public class RobotContainer {
     MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
     MoveClimber = new JoystickButton(BUTTON_JOYSTICK, 3);
     
+    
+    CameraServer.startAutomaticCapture(0);
+
 
     //Face April Tag Button (Might be spagehhti)
 
@@ -177,6 +181,7 @@ public class RobotContainer {
 
     xboxController.rightTrigger().whileTrue(new RunCommand(() -> coralControl.placeCoral(), coralControl));
 
+    xboxController.povUp().toggleOnTrue(new RunCommand(() -> swerveSubsystem.robotCentricToggle(), swerveSubsystem));
               ///////////////// NEW INPUTS: ALGAE \\\\\\\\\\\\\\\\\
     
     xboxController.leftTrigger().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE), algaeArm));
@@ -206,6 +211,8 @@ public class RobotContainer {
     MoveElevator.whileTrue(new JoyElevatorControl(elevator, BUTTON_JOYSTICK));
 
     MoveCoralArm.whileTrue(new JoyCoralArm(coralArm, BUTTON_JOYSTICK));
+
+
 
 
 
