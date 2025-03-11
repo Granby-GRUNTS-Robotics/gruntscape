@@ -44,13 +44,13 @@ public class BackupCoralThree extends Command {
       coralControl.setCoralVelocity(-0.4);
     }
     else if (coralControl.FirstBeamBroken() && coralControl.SecondBeamBroken()) {
-      coralControl.setCoralVelocity(-0.1);
+      coralControl.setCoralVelocity(-0.2);
     }
     else if (coralControl.FirstBeamBroken() && !coralControl.SecondBeamBroken()) {
       coralControl.setCoralVelocity(0);
     }
     else {
-      coralControl.setCoralVelocity(0.3);
+      coralControl.setCoralVelocity(1);
     } 
   }
 

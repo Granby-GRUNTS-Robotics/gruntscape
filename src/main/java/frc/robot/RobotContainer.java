@@ -181,7 +181,10 @@ public class RobotContainer {
 
     xboxController.rightTrigger().whileTrue(new RunCommand(() -> coralControl.placeCoral(), coralControl));
 
-    xboxController.povUp().toggleOnTrue(new RunCommand(() -> swerveSubsystem.robotCentricToggle(), swerveSubsystem));
+    xboxController.povUp().whileTrue(new RunCommand(() -> coralControl.manualCoralMovement(1), coralControl));
+
+    xboxController.povDown().whileTrue(new RunCommand(() -> coralControl.manualCoralMovement(-1), coralControl));
+
               ///////////////// NEW INPUTS: ALGAE \\\\\\\\\\\\\\\\\
     
     xboxController.leftTrigger().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE), algaeArm));

@@ -55,15 +55,14 @@ public class CoralControl extends SubsystemBase {
     coralright.encoder
     .positionConversionFactor(1)
     .velocityConversionFactor(1);
-  
     // Set MAXMotion parameters
-   // coralright.closedLoop.maxMotion
-   // .maxVelocity(0.25)
-   // .maxAcceleration(1)
-   // .allowedClosedLoopError(0.01);
-   // coralright.closedLoop
-   // .pid(0.02, 0.0, 0.0)
-   // .outputRange(kMinOutput, kMaxOutput);
+    coralright.closedLoop.maxMotion
+    .maxVelocity(0.25)
+    .maxAcceleration(1)
+    .allowedClosedLoopError(0.01);
+    coralright.closedLoop
+    .pid(0.02, 0.0, 0.0)
+    .outputRange(kMinOutput, kMaxOutput);
 
     // Coral Left
     coralleft
@@ -74,13 +73,13 @@ public class CoralControl extends SubsystemBase {
         .velocityConversionFactor(1);
 
       // Set MAXMotion parameters
-   // coralleft.closedLoop.maxMotion
-    //    .maxVelocity(0.25)
-    //    .maxAcceleration(1)
-    //   .allowedClosedLoopError(0.01);
-   // coralleft.closedLoop
-    //   .pid(0.02, 0.0, 0.0)
-    //    .outputRange(kMinOutput, kMaxOutput);
+    coralleft.closedLoop.maxMotion
+        .maxVelocity(0.25)
+        .maxAcceleration(1)
+       .allowedClosedLoopError(0.01);
+    coralleft.closedLoop
+        .pid(0.02, 0.0, 0.0)
+        .outputRange(kMinOutput, kMaxOutput);
     
 
     CoralControlRight.configure(coralright, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
@@ -88,11 +87,13 @@ public class CoralControl extends SubsystemBase {
 
   }
 
-  public void setCoralVelocity(double wantedVelocity) {
+  public void setCoralVelocity(double position) {
 
-    CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
+    setCoralWheelPosition(0);
 
-    CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
+    CoralControlLeftPID.setReference(position, SparkMax.ControlType.kMAXMotionPositionControl);
+
+    CoralControlRightPID.setReference(position, SparkMax.ControlType.kMAXMotionPositionControl);
 
   } 
 
@@ -123,7 +124,7 @@ public class CoralControl extends SubsystemBase {
      // CORAL_CONTROL_LEFT_ENCODER.setPosition(2);
       //CORAL_CONTROL_RIGHT_ENCODER.setPosition(2);  
 
-      setCoralVelocity(0.5);
+      setCoralVelocity(10);
 
     }
     else {
@@ -133,17 +134,18 @@ public class CoralControl extends SubsystemBase {
     }
   } 
 
-  public void moveCoralForward(double wantedRotations) {
-
+  public void manualCoralMovement(double wantedRotations) {
+    
       CoralControlRightPID.setReference(wantedRotations, SparkMax.ControlType.kPosition);
       CoralControlLeftPID.setReference(wantedRotations, SparkMax.ControlType.kPosition);
   }
 
-  public void testCoralPosition(double wantedVelocity) {
+
+/*   public void testCoralPosition(double wantedVelocity) {
     CoralControlLeftPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
 
     CoralControlRightPID.setReference(wantedVelocity, SparkMax.ControlType.kDutyCycle);
-}
+} */
 
   @Override
   public void periodic() {
