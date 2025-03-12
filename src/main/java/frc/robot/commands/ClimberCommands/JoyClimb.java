@@ -4,6 +4,7 @@
 
 package frc.robot.commands.ClimberCommands;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -12,6 +13,8 @@ import frc.robot.subsystems.Climber;
 
 public class JoyClimb extends Command {
   /** Creates a new JoyClimb. */
+
+
   Climber climber;
   Joystick joystick;
   AlgaeArm algaeArm;
@@ -29,14 +32,23 @@ public class JoyClimb extends Command {
   @Override
   public void initialize() {
 
-      algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE);
+     /////////////////////////////// algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE);
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setClimberSpeed(joystick.getY() * 1);
+    //if(climber.AllowClimb()) {
+      
+      climber.setClimberSpeed(joystick.getY() * 1);
+
+    /* }
+    else {
+
+      climber.setClimberSpeed(0);
+
+    } */
 
   }
 

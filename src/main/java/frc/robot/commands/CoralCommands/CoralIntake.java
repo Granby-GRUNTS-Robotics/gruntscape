@@ -73,24 +73,6 @@ public class CoralIntake extends Command {
   public boolean isFinished() {
 
     return !intake.FirstBeamBroken() && intake.SecondBeamBroken();
-    // if beam break not hit yet, continue moving forward
-    /*if(!passedLimitSwitch && !intake.touchingBeamBreak()) {
-      return true;
-    }
 
-    // if beam break detected, change bool to false, and continue in end.
-    else if (!passedLimitSwitch && intake.touchingBeamBreak()) {
-      passedLimitSwitch = true;
-
-      return true;
-    }
-
-     else if (intake.touchingBeamBreak() && force == false && intake.coralWheelPosition() <= 10) {
-        force = true;
-        intake.setCoralWheelPosition(0);
-
-        return false;
-    } 
-    return true; */
   }
 }

@@ -5,6 +5,8 @@
 
 package frc.robot.subsystems;
 
+import java.time.chrono.ThaiBuddhistChronology;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -14,6 +16,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,10 +28,11 @@ private static final SparkMax FOLLOW_HOOK_MOTOR = new SparkMax(Constants.Operato
 
 private static final SparkClosedLoopController LEAD_HOOK_PID = LEAD_HOOK_MOTOR.getClosedLoopController();
 
+static final DigitalInput AllowClimb = new DigitalInput(0);
+
 SparkMaxConfig config = new SparkMaxConfig();
 
 SparkMaxConfig FollowerConfig = new SparkMaxConfig();
-
 
 
 
@@ -73,5 +77,16 @@ SparkMaxConfig FollowerConfig = new SparkMaxConfig();
     else{LEAD_HOOK_PID.setReference(0, SparkMax.ControlType.kDutyCycle);}
 
    }
+
+
+   public void manualClimber(double percent) {
+    setClimberSpeed(percent);
+   }
+
+   public boolean AllowClimb() {
+    return !AllowClimb.get();
+   }
+
+
 
 }

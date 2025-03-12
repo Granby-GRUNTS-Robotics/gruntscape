@@ -83,8 +83,8 @@ public class RobotContainer {
   public static JoystickButton FaceTag;
   public static JoystickButton BrakeClimber;
   public static JoystickButton MoveClimber;
-
-
+  
+  
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3g); //////// ADD LIMELIGHT3 BACK IN!!!!!
 
   public static final AlgaeArm algaeArm = new AlgaeArm();
@@ -114,7 +114,7 @@ public class RobotContainer {
     MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
     MoveClimber = new JoystickButton(BUTTON_JOYSTICK, 3);
     
-    
+
     CameraServer.startAutomaticCapture(0);
 
 
@@ -181,9 +181,11 @@ public class RobotContainer {
 
     xboxController.rightTrigger().whileTrue(new RunCommand(() -> coralControl.placeCoral(), coralControl));
 
-    xboxController.povUp().whileTrue(new RunCommand(() -> coralControl.manualCoralMovement(1), coralControl));
+    xboxController.povUp().whileTrue(new RunCommand(() -> coralControl.manualCoralMovement(-0.1), coralControl));
+    xboxController.povUp().whileFalse(new RunCommand(() -> coralControl.manualCoralMovement(0), coralControl));
 
-    xboxController.povDown().whileTrue(new RunCommand(() -> coralControl.manualCoralMovement(-1), coralControl));
+    xboxController.povDown().whileTrue(new RunCommand(() -> coralControl.manualCoralMovement(0.1), coralControl));
+    xboxController.povDown().whileFalse(new RunCommand(() -> coralControl.manualCoralMovement(0), coralControl));
 
               ///////////////// NEW INPUTS: ALGAE \\\\\\\\\\\\\\\\\
     
@@ -214,7 +216,6 @@ public class RobotContainer {
     MoveElevator.whileTrue(new JoyElevatorControl(elevator, BUTTON_JOYSTICK));
 
     MoveCoralArm.whileTrue(new JoyCoralArm(coralArm, BUTTON_JOYSTICK));
-
 
 
 

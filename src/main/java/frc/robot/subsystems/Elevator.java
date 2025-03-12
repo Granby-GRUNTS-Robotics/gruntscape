@@ -46,8 +46,8 @@ public class Elevator extends SubsystemBase {
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
    config.closedLoop.maxMotion
-    .maxVelocity(2000)
-    .maxAcceleration(3000)
+    .maxVelocity(4000)
+    .maxAcceleration(3500)
     .allowedClosedLoopError(0.03);
     config.closedLoop
     .pidf(0.3, 0.0, 0.0,0.000)
