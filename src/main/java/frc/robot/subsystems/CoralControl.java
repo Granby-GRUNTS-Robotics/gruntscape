@@ -42,7 +42,7 @@ public class CoralControl extends SubsystemBase {
   
    static final DigitalInput FirstBeam = new DigitalInput(2);
 
-  private static final DigitalInput SecondBeam = new DigitalInput(9);
+  private static final DigitalInput SecondBeam = new DigitalInput(1);
   
 
   public CoralControl() {

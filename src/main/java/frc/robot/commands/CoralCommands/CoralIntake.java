@@ -53,7 +53,7 @@ public class CoralIntake extends Command {
      // Phase 1
      else {
 
-      intake.setCoralVelocity(1);
+      intake.setCoralVelocity(0.8);
 
     }
 

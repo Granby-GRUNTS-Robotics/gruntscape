@@ -9,18 +9,6 @@
           "data": {
             "pathName": "Center path 1"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoPlaceCoralThree"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralPickup"
-          }
         }
       ]
     }

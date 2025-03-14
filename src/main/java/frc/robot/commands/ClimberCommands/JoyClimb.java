@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class JoyClimb extends Command {
   /** Creates a new JoyClimb. */
@@ -18,8 +19,8 @@ public class JoyClimb extends Command {
   Climber climber;
   Joystick joystick;
   AlgaeArm algaeArm;
-
-  public JoyClimb(Climber climber, AlgaeArm algaeArm, Joystick joystick) {
+  SwerveSubsystem swerveSubsystem;
+  public JoyClimb(SwerveSubsystem swerveSubsystem, Climber climber, AlgaeArm algaeArm, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climber = climber;
     this.joystick = joystick;
@@ -32,18 +33,23 @@ public class JoyClimb extends Command {
   @Override
   public void initialize() {
 
-     /////////////////////////////// algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE);
+    
+        algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE);
+      
+        Constants.isSlow = true;
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //if(climber.AllowClimb()) {
+
+    ///////////////////// THIS MIGHT HAVE FRIED THE SERVO
+   // if(climber.AllowClimb()) {
       
       climber.setClimberSpeed(joystick.getY() * 1);
 
-    /* }
+   /*   }
     else {
 
       climber.setClimberSpeed(0);

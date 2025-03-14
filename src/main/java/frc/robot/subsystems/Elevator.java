@@ -47,10 +47,10 @@ public class Elevator extends SubsystemBase {
     // Set MAXMotion parameters
    config.closedLoop.maxMotion
     .maxVelocity(4000)
-    .maxAcceleration(3500)
-    .allowedClosedLoopError(0.03);
+    .maxAcceleration(6000)
+    .allowedClosedLoopError(0.1);
     config.closedLoop
-    .pidf(0.3, 0.0, 0.0,0.000)
+    .pidf(0.2, 0.0, 0.05,0.000)
     .outputRange(kMinOutput, kMaxOutput);
 
     //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
@@ -78,4 +78,3 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putNumber("Elevator Position", ELEVATOR_DIRECTION_ENCODER.getPosition());
   }
 }
-

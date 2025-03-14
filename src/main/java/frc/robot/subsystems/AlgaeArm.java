@@ -35,11 +35,11 @@ public class AlgaeArm extends SubsystemBase {
 
     // Set MAXMotion parameters
     config.closedLoop.maxMotion
-        .maxVelocity(7000)
+        .maxVelocity(1400)
         .maxAcceleration(7000)
         .allowedClosedLoopError(0.05);
     config.closedLoop
-        .pid(0.025, 0.0, 0.0) // original value: (0.1, 0, 0)
+        .pid(0.25, 0.0, 0.0) // original value: (0.1, 0, 0)
         .outputRange(kMinOutput, kMaxOutput);
 
     AlgaeArmRotationMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);

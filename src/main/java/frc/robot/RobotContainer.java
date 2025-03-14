@@ -84,8 +84,7 @@ public class RobotContainer {
   public static JoystickButton BrakeClimber;
   public static JoystickButton MoveClimber;
   
-  
-  public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3g); //////// ADD LIMELIGHT3 BACK IN!!!!!
+  public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3g); 
 
   public static final AlgaeArm algaeArm = new AlgaeArm();
   public static final AlgaeControl algaeControl = new AlgaeControl();
@@ -211,7 +210,7 @@ public class RobotContainer {
 
     BrakeClimber.whileTrue(new RunCommand(() -> brake.ActivateBrake()));
 
-    MoveClimber.whileTrue(new JoyClimb(climber, algaeArm, BUTTON_JOYSTICK));
+    MoveClimber.whileTrue(new JoyClimb(swerveSubsystem, climber, algaeArm, BUTTON_JOYSTICK));
 
     MoveElevator.whileTrue(new JoyElevatorControl(elevator, BUTTON_JOYSTICK));
 

@@ -30,7 +30,7 @@ public class AlgaeControl extends SubsystemBase {
  // private static final PIDController RIGHT_ALGAE_CONTROLLER = AlgaePIDController;
 
  public AlgaeControl() { 
-  config
+ /*  config
   //.inverted(false)
   .idleMode(IdleMode.kBrake);
  config.encoder
@@ -42,7 +42,7 @@ public class AlgaeControl extends SubsystemBase {
     
   //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
   AlgaeControlMotorRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-  AlgaeControlMotorLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+  AlgaeControlMotorLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters); */
 
   
 
