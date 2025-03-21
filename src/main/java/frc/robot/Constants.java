@@ -170,7 +170,8 @@ public final class Constants {
   }
 
   public static class Algae {
-    
+
+    // MAX VOLTAGE OF NEO 550'S = 10
     public static final double intakeCurrentAlgaeControl  =   10;  
     public static final double outtakeCurrentAlgaeControl  =  -10; 
     
@@ -200,7 +201,7 @@ public final class Constants {
     public static double CORAL_ARM_POSITION_HOME = 3.8; //0.S03 // AKA "PICKUP"
     public static double CORAL_ARM_POSITION_ONE = 4.1; //0.05
     public static double CORAL_ARM_POSITION_TWO = 4.1; //0.1
-    public static double CORAL_ARM_POSITION_THREE = 12.5; // usually **13**
+    public static double CORAL_ARM_POSITION_THREE = 10; // usually **13**// 12.5 // 11.1 // 10
 
   }
   

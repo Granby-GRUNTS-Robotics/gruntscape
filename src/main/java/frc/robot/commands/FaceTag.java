@@ -37,13 +37,14 @@ public class FaceTag extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     this.limelight = limelight;
     this.swerve = swerve;
+
+    addRequirements(limelight, swerve);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    addRequirements(limelight);
-    addRequirements(swerve);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

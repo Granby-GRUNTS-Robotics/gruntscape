@@ -7,6 +7,7 @@ package frc.robot.commands.ClimberCommands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.Climber;
@@ -22,9 +23,11 @@ public class JoyClimb extends Command {
   SwerveSubsystem swerveSubsystem;
   public JoyClimb(SwerveSubsystem swerveSubsystem, Climber climber, AlgaeArm algaeArm, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.swerveSubsystem = swerveSubsystem;
     this.climber = climber;
-    this.joystick = joystick;
     this.algaeArm = algaeArm;
+    this.joystick = joystick;
+
 
     addRequirements(climber);
   }
@@ -32,11 +35,10 @@ public class JoyClimb extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
     
-        algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE);
-      
-        Constants.isSlow = true;
+      Constants.isSlow = true;
+
+      algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE);
 
   }
 
@@ -61,7 +63,12 @@ public class JoyClimb extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+   
     climber.setClimberSpeed(0);
+
+    Constants.isSlow = false;
+    
+
   }
 
   // Returns true when the command should end.

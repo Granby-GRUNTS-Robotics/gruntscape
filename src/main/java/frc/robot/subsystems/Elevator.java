@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkBase.ResetMode;  
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.math.controller.PIDController;
 
@@ -46,11 +46,11 @@ public class Elevator extends SubsystemBase {
     .velocityConversionFactor(1);
     // Set MAXMotion parameters
    config.closedLoop.maxMotion
-    .maxVelocity(4000)
-    .maxAcceleration(6000)
+    .maxVelocity(5000)
+    .maxAcceleration(12000)
     .allowedClosedLoopError(0.1);
     config.closedLoop
-    .pidf(0.2, 0.0, 0.05,0.000)
+    .pidf(0.2, 0.0, 0.1,0.000)
     .outputRange(kMinOutput, kMaxOutput);
 
     //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  

@@ -10,9 +10,13 @@ import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.AprilTagsCommands.FollowTag;
 import frc.robot.commands.AutoCommands.AutoPlaceCoralOne;
 import frc.robot.commands.AutoCommands.AutoPlaceCoralThree;
+import frc.robot.commands.AutoCommands.AutoPlaceCoralTwo;
 import frc.robot.commands.ClimberCommands.JoyClimb;
+import frc.robot.commands.CoralCommands.BackupCoralThree;
 import frc.robot.commands.CoralCommands.CoralIntake;
+import frc.robot.commands.CoralCommands.CoralMoveArm;
 import frc.robot.commands.CoralCommands.JoyCoralArm;
+import frc.robot.commands.CoralCommands.PlaceCoral;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPickup;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionOne;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionThree;
@@ -83,7 +87,7 @@ public class RobotContainer {
   public static JoystickButton FaceTag;
   public static JoystickButton BrakeClimber;
   public static JoystickButton MoveClimber;
-  
+  public static JoystickButton NarwalButton;
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3g); 
 
   public static final AlgaeArm algaeArm = new AlgaeArm();
@@ -105,14 +109,19 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem, xboxController, Constants.isFieldCentric));
 
    BrakeClimber = new JoystickButton(BUTTON_JOYSTICK, 5);
-   MoveCoralArm = new JoystickButton(BUTTON_JOYSTICK, 2);
+   MoveCoralArm = new JoystickButton(BUTTON_JOYSTICK, 7);
 
     MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
-    MoveClimber = new JoystickButton(BUTTON_JOYSTICK, 3);
-    
+    MoveClimber = new JoystickButton(BUTTON_JOYSTICK, 2);
+
+    NarwalButton = new JoystickButton(BUTTON_JOYSTICK, 12);
+  
+    Constants.isSlow = false;
+
 
     CameraServer.startAutomaticCapture(0);
 
@@ -122,13 +131,20 @@ public class RobotContainer {
     FaceTag = new JoystickButton(BUTTON_JOYSTICK, 10);
 
        // Register Named Commands
-      NamedCommands.registerCommand("AutoPlaceCoralThree", new AutoPlaceCoralThree(elevator, coralArm,  coralControl));
+      NamedCommands.registerCommand("AutoPlaceCoralTwo", new AutoPlaceCoralOne(elevator, coralArm,  coralControl));
+      NamedCommands.registerCommand("AutoPlaceCoralThree", new AutoPlaceCoralTwo(elevator, coralArm,  coralControl));
+      NamedCommands.registerCommand("AutoPlaceCoralFour", new AutoPlaceCoralThree(elevator, coralArm,  coralControl));
+      
+      NamedCommands.registerCommand("BackupCoral", new BackupCoralThree(coralControl));
+
+      NamedCommands.registerCommand("PlaceCoral", new PlaceCoral(coralControl));
+
       NamedCommands.registerCommand("CoralPickup", new CoralPickup(elevator, coralArm,  coralControl));
 
     // Configure the trigger bindings
     configureBindings();
 
-      // This Should populate with all Autos (*.auto files) in deploy/pathplanner/autos directory. No need to populate here.
+      // This Should populate with all Autos (*.aut%o files) in deploy/pathplanner/autos directory. No need to populate here.
       autoChooser = AutoBuilder.buildAutoChooser();
 
       // Default auto will be `Commands.none()`
@@ -192,7 +208,7 @@ public class RobotContainer {
     xboxController.leftTrigger().toggleOnFalse(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_HOME_POSITION), algaeArm));
 
     xboxController.leftBumper().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.intakeCurrentAlgaeControl), algaeControl)); // INTAKE
-    xboxController.leftBumper().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(1))); // INTAKE
+    xboxController.leftBumper().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(2))); // INTAKE
 
     xboxController.leftStick().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.outtakeCurrentAlgaeControl), algaeControl)); // OUTTAKE
     xboxController.leftStick().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(0))); // OUTTAKE
@@ -203,6 +219,10 @@ public class RobotContainer {
     xboxController.button(7).whileTrue(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 1)));
     xboxController.button(7).whileFalse(new InstantCommand(() -> hid.setRumble(GenericHID.RumbleType.kBothRumble, 0)));
 
+
+              ///////////////// ROBOT CENTRIC TOGGLE \\\\\\\\\\\\\\\\\
+               
+   // xboxController.button(8).toggleOnTrue(new InstantCommand(() -> swerveSubsystem.robotCentricToggle()));
 
               ///////////////// JOYSTICK BUTTONS \\\\\\\\\\\\\\\\\
    
@@ -216,7 +236,7 @@ public class RobotContainer {
 
     MoveCoralArm.whileTrue(new JoyCoralArm(coralArm, BUTTON_JOYSTICK));
 
-
+    NarwalButton.toggleOnTrue(new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE));
 
 
    /*  

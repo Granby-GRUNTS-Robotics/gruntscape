@@ -30,21 +30,6 @@ public class AlgaeControl extends SubsystemBase {
  // private static final PIDController RIGHT_ALGAE_CONTROLLER = AlgaePIDController;
 
  public AlgaeControl() { 
- /*  config
-  //.inverted(false)
-  .idleMode(IdleMode.kBrake);
- config.encoder
-  .positionConversionFactor(1)
-  .velocityConversionFactor(1);
- config.closedLoop
-  .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-  .pid(0.02, 0.0, 0.0);
-    
-  //ElevatorDirectionMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);  
-  AlgaeControlMotorRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-  AlgaeControlMotorLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters); */
-
-  
 
   
   }
@@ -55,8 +40,8 @@ public class AlgaeControl extends SubsystemBase {
     SmartDashboard.putNumber("Left Intake Amps", AlgaeControlMotorLeft.getOutputCurrent());
     SmartDashboard.putNumber("Right Intake Amps", AlgaeControlMotorRight.getOutputCurrent());
 
-    SmartDashboard.putNumber("Left Intake Temp", AlgaeControlMotorLeft.getMotorTemperature());
-    SmartDashboard.putNumber("Right Intake Temp", AlgaeControlMotorRight.getMotorTemperature());
+    SmartDashboard.putNumber("Left Algae Intake Temp", AlgaeControlMotorLeft.getMotorTemperature());
+    SmartDashboard.putNumber("Right Algae Intake Temp", AlgaeControlMotorRight.getMotorTemperature());
 
 
   }

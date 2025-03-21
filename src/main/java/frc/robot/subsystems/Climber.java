@@ -56,10 +56,7 @@ SparkMaxConfig FollowerConfig = new SparkMaxConfig();
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    //SmartDashboard.putNumber("Hook Position", m_encoder.getPosition());
 
-   // SmartDashboard.putNumber("Hook Speed", m_encoder.getVelocity());
   }
 
   public void setClimberSpeed(double percent)
@@ -83,9 +80,12 @@ SparkMaxConfig FollowerConfig = new SparkMaxConfig();
     setClimberSpeed(percent);
    }
 
+ /*   
    public boolean AllowClimb() {
     return !AllowClimb.get();
-   }
+   } 
+
+ */
 
 
 
