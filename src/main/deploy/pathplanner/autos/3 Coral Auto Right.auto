@@ -13,33 +13,20 @@
                 "data": {
                   "name": "AutoPlaceCoralFour"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "named",
                 "data": {
                   "name": "BackupCoral"
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center path 1"
-                }
               }
             ]
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.5
+            "pathName": "Start Right"
           }
         },
         {
@@ -57,7 +44,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Path Back up"
+            "pathName": "From reef right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralPickup"
           }
         }
       ]

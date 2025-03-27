@@ -286,8 +286,9 @@ public void resetAllEncoders()
   }
 
   public void zeroGyro() {
-    gyro.setYaw(0);
+    gyro.setYaw(-180);
   }
+
 
   @Override
   public void periodic() {

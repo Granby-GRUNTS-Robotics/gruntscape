@@ -39,9 +39,10 @@ public final class Constants {
 
     // Elevator Levels
     public static final double HOME_POSITION = 7.5; // rotations: 1 time stuck IF STUCK
-    public static final double PICKUP_POSITION = 7.5; // rotations // coralARM: 4.1
+    public static final double PICKUP_POSITION = 7.5;
+    public static final double TROUGH_HEIGHT = 40; // rotations // coralARM: 4.1
     public static final double LEVEL_ONE_HEIGHT = 69.7; // rotations // coralARM: 4.1
-    public static final double LEVEL_TWO_HEIGHT = 108.3; // rotations // coralARM: 4.1
+    public static final double LEVEL_TWO_HEIGHT = 107.3; // rotations // coralARM: 4.1
     public static final double LEVEL_THREE_HEIGHT = 175; // rotations // coralARM: 13
 
    // public static final double tolerance = 2; // prevent jittering when reaching wanted position (elevator)
@@ -198,10 +199,13 @@ public final class Constants {
 
     public static double CORAL_ARM_POSITIONS = 1;
 
-    public static double CORAL_ARM_POSITION_HOME = 3.8; //0.S03 // AKA "PICKUP"
+    public static double CORAL_ARM_POSITION_HOME = 4.8; //0.S03 // AKA "PICKUP"
+    public static double CORAL_ARM_POSITION_TROUGH = 2.0; //0.S03 // AKA "PICKUP"
+
     public static double CORAL_ARM_POSITION_ONE = 4.1; //0.05
     public static double CORAL_ARM_POSITION_TWO = 4.1; //0.1
     public static double CORAL_ARM_POSITION_THREE = 10; // usually **13**// 12.5 // 11.1 // 10
+    public static double CORAL_ARM_AUTO_THREE = 14; // straight down
 
   }
   

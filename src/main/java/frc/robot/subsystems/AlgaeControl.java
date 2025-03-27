@@ -52,5 +52,6 @@ public class AlgaeControl extends SubsystemBase {
 
     algaeRightPid.setReference(amperage, ControlType.kCurrent);
     algaeLeftPid.setReference(amperage * -1, ControlType.kCurrent);
+
   }
 }

@@ -43,11 +43,7 @@ public class PlaceCoral extends Command {
       coralControl.setCoralVelocity(0.6);
 
     }
-    else {
 
-      coralControl.setCoralVelocity(0);
-  
-    }
   }
 
   // Called once the command ends or is interrupted.
@@ -59,6 +55,6 @@ public class PlaceCoral extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !coralControl.SecondBeamBroken() && !coralControl.FirstBeamBroken();
   }
 }

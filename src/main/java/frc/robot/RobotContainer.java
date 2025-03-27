@@ -10,6 +10,7 @@ import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.AprilTagsCommands.FollowTag;
 import frc.robot.commands.AutoCommands.AutoPlaceCoralOne;
 import frc.robot.commands.AutoCommands.AutoPlaceCoralThree;
+import frc.robot.commands.AutoCommands.AutoPlaceCoralThreeAuto;
 import frc.robot.commands.AutoCommands.AutoPlaceCoralTwo;
 import frc.robot.commands.ClimberCommands.JoyClimb;
 import frc.robot.commands.CoralCommands.BackupCoralThree;
@@ -21,6 +22,7 @@ import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPickup;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionOne;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionThree;
 import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralPositionTwo;
+import frc.robot.commands.CoralCommands.WholeCoralCommands.CoralTroughShot;
 import frc.robot.commands.ElevatorCommands.JoyElevatorControl;
 import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.AlgaeControl;
@@ -87,7 +89,6 @@ public class RobotContainer {
   public static JoystickButton FaceTag;
   public static JoystickButton BrakeClimber;
   public static JoystickButton MoveClimber;
-  public static JoystickButton NarwalButton;
   public static final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(limeLight3g); 
 
   public static final AlgaeArm algaeArm = new AlgaeArm();
@@ -118,7 +119,6 @@ public class RobotContainer {
     MoveElevator = new JoystickButton(BUTTON_JOYSTICK, 1);
     MoveClimber = new JoystickButton(BUTTON_JOYSTICK, 2);
 
-    NarwalButton = new JoystickButton(BUTTON_JOYSTICK, 12);
   
     Constants.isSlow = false;
 
@@ -131,9 +131,11 @@ public class RobotContainer {
     FaceTag = new JoystickButton(BUTTON_JOYSTICK, 10);
 
        // Register Named Commands
+      //NamedCommands.registerCommand("AutoZero",  swerveSubsystem.autoZero());
+
       NamedCommands.registerCommand("AutoPlaceCoralTwo", new AutoPlaceCoralOne(elevator, coralArm,  coralControl));
       NamedCommands.registerCommand("AutoPlaceCoralThree", new AutoPlaceCoralTwo(elevator, coralArm,  coralControl));
-      NamedCommands.registerCommand("AutoPlaceCoralFour", new AutoPlaceCoralThree(elevator, coralArm,  coralControl));
+      NamedCommands.registerCommand("AutoPlaceCoralFour", new AutoPlaceCoralThreeAuto(elevator, coralArm,  coralControl));
       
       NamedCommands.registerCommand("BackupCoral", new BackupCoralThree(coralControl));
 
@@ -202,10 +204,20 @@ public class RobotContainer {
     xboxController.povDown().whileTrue(new RunCommand(() -> coralControl.manualCoralMovement(0.1), coralControl));
     xboxController.povDown().whileFalse(new RunCommand(() -> coralControl.manualCoralMovement(0), coralControl));
 
-              ///////////////// NEW INPUTS: ALGAE \\\\\\\\\\\\\\\\\
+
+    xboxController.povRight().toggleOnTrue(new CoralTroughShot(elevator, coralArm, coralControl));
+  
+    xboxController.rightBumper().toggleOnTrue(new CoralTroughShot(elevator, coralArm, coralControl));
+    xboxController.rightBumper().toggleOnTrue(new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE));
+
+    ///////////////// NEW INPUTS: ALGAE \\\\\\\\\\\\\\\\\
     
     xboxController.leftTrigger().toggleOnTrue(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_LEVEL_THREE), algaeArm));
     xboxController.leftTrigger().toggleOnFalse(new RunCommand(() -> algaeArm.setAlgaeRotations(Constants.Algae.ARM_HOME_POSITION), algaeArm));
+   
+   
+    xboxController.leftBumper().whileTrue(new InstantCommand(() -> swerveSubsystem.slowModeToggle()));
+    xboxController.leftBumper().whileFalse(new InstantCommand(() -> swerveSubsystem.slowModeToggle()));
 
     xboxController.leftBumper().whileTrue(new InstantCommand(() -> algaeControl.setSpeeds(Constants.Algae.intakeCurrentAlgaeControl), algaeControl)); // INTAKE
     xboxController.leftBumper().whileFalse(new InstantCommand(() -> algaeControl.setSpeeds(2))); // INTAKE
@@ -235,8 +247,6 @@ public class RobotContainer {
     MoveElevator.whileTrue(new JoyElevatorControl(elevator, BUTTON_JOYSTICK));
 
     MoveCoralArm.whileTrue(new JoyCoralArm(coralArm, BUTTON_JOYSTICK));
-
-    NarwalButton.toggleOnTrue(new CoralMoveArm(coralArm, Constants.Coral.CORAL_ARM_POSITION_THREE));
 
 
    /*  
