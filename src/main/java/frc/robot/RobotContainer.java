@@ -32,10 +32,13 @@ import frc.robot.subsystems.ClimberWinch;
 import frc.robot.subsystems.CoralArm;
 import frc.robot.subsystems.CoralControl;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.SwerveSubsystem;
 import pabeles.concurrency.ConcurrencyOps.Reset;
 import frc.robot.subsystems.Brake;
+
+import com.ctre.phoenix.CANifier;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -53,6 +56,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import frc.robot.commands.SetColor;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -64,6 +68,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
  // public static final LimeLight limeLight3  = new LimeLight(Constants.Limelight.limelightName3);
   public static final LimeLight limeLight3g  = new LimeLight(Constants.Limelight.limelightName3g);
+
   
   // Xbox controller
   private final static CommandXboxController xboxController = new CommandXboxController(0);
@@ -81,7 +86,9 @@ public class RobotContainer {
   public static JoystickButton ArmLevelThree;
   
   */
+    public static final CANifier CANIFIER = new CANifier(Constants.CANIFIER);   // LED Controller
 
+    
 
 // Create joystick buttons
   public static JoystickButton MoveElevator;
@@ -110,7 +117,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
+        LEDs.setLEDColor(0.5, 0.0, 0.5);
+        // orange = 255, 165, 0
+        // 255/ 
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem, xboxController, Constants.isFieldCentric));
 
    BrakeClimber = new JoystickButton(BUTTON_JOYSTICK, 5);
