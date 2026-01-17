@@ -85,15 +85,15 @@ public class SwerveJoystickCmd extends Command {
     if (Math.abs(xSpeed) + Math.abs(ySpeed) > .01 )
     directionSpeed = (directionSpeed * 2 - swerveSubsystem.getZSpeed());
 
-    if (Constants.isSlow == true || Elevator.getCurrentElevatorPosition() >= Constants.OperatorConstants.LEVEL_TWO_HEIGHT)
-    {
+   // if (Constants.isSlow == true || Elevator.getCurrentElevatorPosition() >= Constants.OperatorConstants.LEVEL_TWO_HEIGHT)
+  //  {
       xSpeed /= 2.5;
       ySpeed /= 2.5;
-      directionSpeed /= 2.5;
+      directionSpeed /= 20.5;
       red = 0.0;
       green = 0.7;
       blue = 0.0;
-    }
+   /*  }
     else
     {
       xSpeed *= 1.5; //2;  // trying to speed up driving so I added this
@@ -101,7 +101,7 @@ public class SwerveJoystickCmd extends Command {
       red = 0.7;
       green = 0.0;
       blue = 0.0;
-    }
+    } */
 
     ChassisSpeeds chassisSpeeds;
 

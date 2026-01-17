@@ -59,6 +59,8 @@ public final class Constants {
   }
 
   public static final int PIGEON_ID = 1;
+  public static final int CANIFIER = 3;
+
 
   public static final double LEFT_FRONT_RADIAN_OFFSET  = 0; // (0.3388) * 2 * Math.PI; //Math.toRadians(233.086);  //Math.toRadians(18.457); //19.424 18.457 // 18.193 //52.383
   public static final double RIGHT_FRONT_RADIAN_OFFSET = 0; // (0.4074) * 2 * Math.PI; //Math.toRadians(288.633); // Math.toRadians(321.943);  //Math.toRadians(144.932); //144.404 144.932 //290.742
@@ -96,7 +98,7 @@ public final class Constants {
   public static final double kPTurning = .5; //0.3 0.15; //how much p the turning motors get. anything > 1 makes the wheels shake
 
     ///**** NOTE: if physicalMaxSpeedMPS is too low the auto speeds are crazy fast and distances are off. .005 was NOT GOOD */
-  public static final double physicalMaxSpeedMPS = 4.6; //5; Scott1 //5; // 0.005; //0.07 before fly-in //is this a double? what should the value be?
+  public static final double physicalMaxSpeedMPS = 0.3; // comptetion speed = 4.6; //5; Scott1 //5; // 0.005; //0.07 before fly-in //is this a double? what should the value be?
   public static final double physicalMaxSpeedMPSslow = 0.07;
 
   /** This impacts speed fo spin/turning of robot. */
@@ -199,7 +201,7 @@ public final class Constants {
 
     public static double CORAL_ARM_POSITIONS = 1;
 
-    public static double CORAL_ARM_POSITION_HOME = 4.8; //0.S03 // AKA "PICKUP"
+    public static double CORAL_ARM_POSITION_HOME = 4.2; //4.8; //4.928566 // AKA "PICKUP"
     public static double CORAL_ARM_POSITION_TROUGH = 2.0; //0.S03 // AKA "PICKUP"
 
     public static double CORAL_ARM_POSITION_ONE = 4.1; //0.05
